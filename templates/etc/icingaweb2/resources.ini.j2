@@ -1,0 +1,23 @@
+;{{ ansible_managed }}
+
+[icingaweb_db]
+type = "db"
+db = "mysql"
+host = "{{ icinga2_web_database_host }}"
+port = "{{ icinga2_web_database_port }}"
+dbname = "{{ icinga2_web_database_name }}"
+username = "{{ icinga2_web_database_user }}"
+password = "{{ icinga2_web_database_pass }}"
+charset = ""
+use_ssl = "0"
+
+[icinga_ido]
+type = "db"
+db = "mysql"
+host = "{{ icinga2_master_database_host }}"
+port = "{{ icinga2_master_database_port }}"
+dbname = "{{ icinga2_master_database_name }}"
+username = "{{ icinga2_master_database_user }}"
+password = "{{ icinga2_master_database_pass }}"
+charset = ""
+use_ssl = "0"

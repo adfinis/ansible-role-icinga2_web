@@ -1,0 +1,8 @@
+;{{ ansible_managed }}
+
+[icinga2]
+transport = "api"
+host = "{{ icinga2_master_api_host }}"
+port = "{{ icinga2_master_api_port }}"
+username = "{{ icinga2_master_api_user }}"
+password = "{{ icinga2_master_api_pass }}"

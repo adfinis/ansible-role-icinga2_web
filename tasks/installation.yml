@@ -1,1 +1,14 @@
 ---
+
+- name: install centos scl
+  package:
+    name: '{{ icinga2_web_scl }}'
+    state: present
+  when:
+    ansible_distribution == 'CentOS'
+
+- name: install icinga2 web packages
+  package:
+    name: '{{ icinga2_web_packages }}'
+    state: present
+  when: ansible_distribution == 'CentOS'
