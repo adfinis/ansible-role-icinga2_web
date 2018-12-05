@@ -11,15 +11,17 @@ ROLE ICINGA2_WEB
 .. image:: https://img.shields.io/badge/galaxy-adfinis--sygroup.icinga2_web-660198.svg?style=flat-square
   :target: https://galaxy.ansible.com/adfinis-sygroup/icinga2_web
 
-A brief description of the role goes here.
+This role installs and configures icingaweb2.
 
 
 Requirements
 =============
 
-Any pre-requisites that may not be covered by Ansible itself or the role
-should be mentioned here. For instance, if the role uses the EC2 module, it
-may be a good idea to mention in this section that the boto package is required.
+What you will need to benefit from this role a webserver installed on the system.
+At Adfinis, we use the following role:
+
+* `adfinis-sygroup.nginx <https://galaxy.ansible.com/adfinis-sygroup/nginx>`_
+
 
 
 Role Variables
@@ -35,16 +37,13 @@ should be mentioned here as well.
 Dependencies
 =============
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables
-that are used from other roles.
+This role depends on the following roles:
 
+* `adfinis-sygroup.php_fpm <https://galaxy.ansible.com/adfinis-sygroup/php_fpm>`_
+* `adfinis-sygroup.icinga2_master <https://galaxy.ansible.com/adfinis-sygroup/icinga2_master>`_
 
 Example Playbook
 =================
-
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
 
 .. code-block:: yaml
 
