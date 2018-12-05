@@ -1,22 +1,22 @@
 ---
 
-# The database icinga2 will export it's configuration to.
+# The database icinga2 will export its configuration to.
 # default is "icinga2"
 icinga2_web_database_name: "icinga2"
 
-# The database user icinga2 will export it's configuration to.
+# The database user icinga2 will export its configuration to.
 # default is "icinga2"
 icinga2_web_database_user: "icinga2"
 
-# The database password icinga2 will export it's configuration to.
+# The database password icinga2 will export its configuration to.
 # default is "password"
 icinga2_web_database_pass: "password"
 
-# The database host icinga2 will export it's configuration to.
+# The database host icinga2 will export its configuration to.
 # default is "localhost"
 icinga2_web_database_host: "127.0.0.1"
 
-# The database port icinga2 will export it's configuration to.
+# The database port icinga2 will export its configuration to.
 # default is "localhost"
 icinga2_web_database_port: "3306"
 
