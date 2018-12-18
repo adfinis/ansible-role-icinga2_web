@@ -4,7 +4,6 @@
   package:
     name: '{{ icinga2_web_packages }}'
     state: present
-  when: ansible_distribution == 'CentOS'
 
 # Allow httpd to connect to the mysql database
 - name: Set httpd_can_network_connect_db flag on and keep it persistent across reboots
