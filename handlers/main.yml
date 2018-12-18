@@ -1,6 +1,6 @@
 ---
 
-- name: restart php-fpm
+- name: icinga2_web reload icinga2
   service:
-    name: rh-php71-php-fpm.service
-    state: restarted
+    name: icinga2
+    state: reloaded

@@ -1,101 +1,39 @@
 ---
 
-# - name:
-- name: configure php timezone
-  lineinfile:
-    path: /etc/opt/rh/rh-php71/php.ini
-    regexp: '^date.timezone( )?='
-    line: 'date.timezone = Europe/Zurich'
-  notify: restart php-fpm
-
-- name: enable icinga2 ido feature
+- name: configure icingaweb2
   template:
-    src: templates/etc/icinga2/features-enabled/ido-mysql.conf.j2
-    dest: /etc/icinga2/features-enabled/ido-mysql.conf
-    owner: icinga
-    group: icinga
-    mode: 0640
-
-- name: Set httpd_can_network_connect_db flag on and keep it persistent across reboots
-  seboolean:
-    name: httpd_can_network_connect_db
-    state: yes
-    persistent: yes
-
-- name: check if icingaweb2 table in mysql exists
-  shell: 'mysql {{icinga2_web_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
-  register: icinga_master_imported
-
-- name: import icinga2 ido database schema
-  mysql_db:
-    name: '{{ icinga2_master_database_name }}'
-    login_host: '{{ icinga2_master_database_host }}'
-    login_port: '{{ icinga2_master_database_port }}'
-    login_user: '{{ icinga2_master_database_user }}'
-    login_password: '{{ icinga2_master_database_pass }}'
-    state: import
-    target: '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
-  when: icinga_master_imported.rc == 1
-
-
-# configure icingaweb2
-- name: configure icingaweb2 basics
-  template:
-    src: templates/etc/icingaweb2/config.ini.j2
-    dest: /etc/icingaweb2/config.ini
+    src: 'templates/etc/icingaweb2/{{ item }}.j2'
+    dest: '/etc/icingaweb2/{{ item }}'
     owner: root
     group: icingaweb2
-    mode: 0660
-
-- name: configure icingaweb2 resources
-  template:
-    src: templates/etc/icingaweb2/resources.ini.j2
-    dest: /etc/icingaweb2/resources.ini
-    owner: root
-    group: icingaweb2
-    mode: 0660
-
-- name: configure icingaweb2 roles
-  template:
-    src: templates/etc/icingaweb2/roles.ini.j2
-    dest: /etc/icingaweb2/roles.ini
-    owner: root
-    group: icingaweb2
-    mode: 0660
-
-- name: configure icingaweb2 authentication
-  template:
-    src: templates/etc/icingaweb2/authentication.ini.j2
-    dest: /etc/icingaweb2/authentication.ini
-    owner: root
-    group: icingaweb2
-    mode: 0660
-
-
-# icinga2 api setup
-# /etc/icinga2/conf.d/api-users.conf
-
-# enable and configure the icingaweb2 monitoring module
-- name: check if icingaweb2 table in mysql exists
-  shell: 'mysql {{icinga2_web_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
-  register: icinga_web_imported
-
-- name: import icingaweb2 database schema
-  mysql_db:
-    name: '{{ icinga2_web_database_name }}'
-    login_host: '{{ icinga2_web_database_host }}'
-    login_port: '{{ icinga2_web_database_port }}'
-    login_user: '{{ icinga2_web_database_user }}'
-    login_password: '{{ icinga2_web_database_pass }}'
-    state: import
-    target: '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
-  when: icinga_web_imported.rc == 1
+    mode: 0644
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  with_items:
+    - config.ini
+    - resources.ini
+    - roles.ini
+    - authentication.ini
 
 - name: enable the icingaweb2 monitoring module
   file:
     src: /usr/share/icingaweb2/modules/monitoring
     dest: /etc/icingaweb2/enabledModules/monitoring
     state: link
+
+- name: ensure icingaweb2 modules directory is present
+  file:
+    name: /etc/icingaweb2/modules/monitoring
+    state: directory
+    owner: root
+    group: icingaweb2
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
 
 - name: configure icingaweb2 monitoring module
   template:
@@ -104,6 +42,10 @@
     owner: root
     group: icingaweb2
     mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
 
 - name: configure icingaweb2 monitoring module commandtransport
   template:
@@ -112,6 +54,10 @@
     owner: root
     group: icingaweb2
     mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
 
 - name: configure icingaweb2 monitoring module backends
   template:
@@ -120,15 +66,23 @@
     owner: root
     group: icingaweb2
     mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
 
 - name: create icingaweb2 admin password hash
-  command: 'openssl passwd -1 {{ icinga2_web_admin_pass }}'
-  register: icinga_web_admin_hash
-  when: icinga_web_imported.rc == 1
+  shell: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
+  register: icinga2_web_register_admin_hash
+  when: icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: insert icingaweb2 admin password into database
-  command: "mysql -h{{ icinga2icinga2_web_database_host }} -u{{ icinga2_web_database_user }} -p{{ icinga2_web_database_user }} -P{{ icinga2_web_database_port }} -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('admin', 1, '{{ icinga_web_admin_hash }}')'"
-  when: icinga_web_imported.rc == 1
-
-  # firewall-cmd --zone=public --add-port=80/tcp --permanent
-  # firewall-cmd --reload
+  command: |
+    mysql \
+    -h"{{ icinga2_web_icingaweb2_database_host }}" \
+    -u"{{ icinga2_web_icingaweb2_database_user }}" \
+    -p"{{ icinga2_web_icingaweb2_database_pass }}" \
+    -P"{{ icinga2_web_icingaweb2_database_port }}" \
+    "{{ icinga2_web_icingaweb2_database_name }}" \
+    -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
+  when: icinga2_web_register_icingaweb2_imported.rc == 1 and icinga2_web_register_admin_hash
