@@ -1,9 +1,6 @@
 ---
 
-# The package list needed for icinga web2
-icinga2_web_scl:
-  - centos-release-scl
-
+# package list needed for icingaweb2
 icinga2_web_packages:
   - icingaweb2
   - icingaweb2-selinux
