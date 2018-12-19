@@ -80,7 +80,7 @@
     selevel: s0
 
 - name: create icingaweb2 admin password hash
-  shell: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
+  command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
   when: icinga2_web_register_icingaweb2_imported.rc == 1
 
