@@ -22,7 +22,8 @@
 - name: check if icinga2 table in mysql exists
   shell: 'mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"'
   register: icinga2_web_register_icinga2_imported
-  ignore_errors: yes
+  changed_when: icinga2_web_register_icinga2_imported.rc == 1
+  failed_when: "'Access denied for' in icinga2_web_register_icinga2_imported.stderr"
 
 - name: import icinga2 ido database schema
   mysql_db:
@@ -45,7 +46,8 @@
 - name: check if icingaweb2 table in mysql exists
   shell: 'mysql {{ icinga2_web_icingaweb2_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
   register: icinga2_web_register_icingaweb2_imported
-  ignore_errors: yes
+  changed_when: icinga2_web_register_icingaweb2_imported.rc == 1
+  failed_when: "'Access denied for' in icinga2_web_register_icingaweb2_imported.stderr"
 
 - name: import icingaweb2 database schema
   mysql_db:
