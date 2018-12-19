@@ -4,6 +4,8 @@
   package:
     name: '{{ icinga2_web_packages }}'
     state: present
+  register: icinga2_web_register_packages_installed
+  until: icinga2_web_register_packages_installed is succeeded
 
 # Allow httpd to connect to the mysql database
 - name: set httpd_can_network_connect_db flag on and keep it persistent across reboots
