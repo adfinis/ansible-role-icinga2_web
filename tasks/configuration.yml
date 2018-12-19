@@ -1,5 +1,13 @@
 ---
 
+- name: configure icinga2 ido feature
+  template:
+    src: templates/etc/icinga2/features-available/ido-mysql.conf.j2
+    dest: /etc/icinga2/features-available/ido-mysql.conf
+    owner: icinga
+    group: icinga
+    mode: 0640
+
 - name: configure icingaweb2
   template:
     src: 'templates/etc/icingaweb2/{{ item }}.j2'
