@@ -20,7 +20,7 @@
     persistent: yes
 
 - name: check if icinga2 table in mysql exists
-  shell: 'mysql {{icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"'
+  shell: 'mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"'
   register: icinga2_web_register_icinga2_imported
   ignore_errors: yes
 
@@ -43,7 +43,7 @@
 
 # enable and configure the icingaweb2 monitoring module
 - name: check if icingaweb2 table in mysql exists
-  shell: 'mysql {{icinga2_web_icingaweb2_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
+  shell: 'mysql {{ icinga2_web_icingaweb2_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
   register: icinga2_web_register_icingaweb2_imported
   ignore_errors: yes
 
