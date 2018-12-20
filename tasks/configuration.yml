@@ -7,6 +7,10 @@
     owner: icinga
     group: icinga
     mode: 0640
+    seuser: system_u
+    serole: object_r
+    setype: icinga2_etc_t
+    selevel: s0
 
 - name: configure icingaweb2
   template:

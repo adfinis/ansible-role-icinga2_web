@@ -69,4 +69,8 @@
     owner: root
     group: icingaweb2
     mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
   notify: icinga2_web reload icinga2
