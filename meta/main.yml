@@ -1,9 +1,9 @@
 ---
 
 dependencies:
-  - name: "adfinis-sygroup.mariadb"
-  - name: "adfinis-sygroup.icinga2_agent"
-  - name: "adfinis-sygroup.icinga2_master"
+  - name: 'adfinis-sygroup.mariadb'
+  - name: 'adfinis-sygroup.icinga2_agent'
+  #- name: 'adfinis-sygroup.icinga2_master'
 
 galaxy_info:
   role_name: 'icinga2_web'
@@ -17,6 +17,6 @@ galaxy_info:
       versions:
         - 7
   galaxy_tags:
-    - "icinga2"
-    - "monitoring"
-    - "icingaweb2"
+    - 'icinga2'
+    - 'monitoring'
+    - 'icingaweb2'

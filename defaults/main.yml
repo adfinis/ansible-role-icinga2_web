@@ -1,50 +1,50 @@
 ---
 
 # The icingaweb2 web ui password
-icinga2_web_admin_pass: "passw0rd"
+icinga2_web_admin_pass: 'passw0rd'
 
 # icinga2 API host
-icinga2_web_api_host: "127.0.0.1"
+icinga2_web_api_host: 127.0.0.1
 
 # icinga2 API port
-icinga2_web_api_port: "5665"
+icinga2_web_api_port: 5665
 
 # icinga2 API user
-icinga2_web_api_user: "icingaweb2"
+icinga2_web_api_user: icingaweb2
 
 # icinga2 API password
-icinga2_web_api_pass: "passw0rd"
+icinga2_web_api_pass: 'passw0rd'
 
 
 ## icingaweb2 database settings
 # The icingaweb2 database name
-icinga2_web_icingaweb2_database_name: "icingaweb2"
+icinga2_web_icingaweb2_database_name: icingaweb2
 
 # The icingaweb2 database user
-icinga2_web_icingaweb2_database_user: "icingaweb2"
+icinga2_web_icingaweb2_database_user: icingaweb2
 
 # The icingaweb2 database password
-icinga2_web_icingaweb2_database_pass: "passw0rd"
+icinga2_web_icingaweb2_database_pass: 'passw0rd'
 
 # The icingaweb2 database host
-icinga2_web_icingaweb2_database_host: "127.0.0.1"
+icinga2_web_icingaweb2_database_host: 127.0.0.1
 
 # The icingaweb2 database port
-icinga2_web_icingaweb2_database_port: "3306"
+icinga2_web_icingaweb2_database_port: 3306
 
 
 ## Icinga2 database settings
 # icinga2 database name
-icinga2_web_icinga2_database_name: "icinga2"
+icinga2_web_icinga2_database_name: icinga2
 #
 # icinga2 database host
-icinga2_web_icinga2_database_host: "127.0.0.1"
+icinga2_web_icinga2_database_host: 127.0.0.1
 
 # icinga2 database port
-icinga2_web_icinga2_database_port: "3306"
+icinga2_web_icinga2_database_port: 3306
 
 # icinga2 database user
-icinga2_web_icinga2_database_user: "icinga2"
+icinga2_web_icinga2_database_user: icinga2
 
 # icinga2 database password
-icinga2_web_icinga2_database_pass: "passw0rd"
+icinga2_web_icinga2_database_pass: 'passw0rd'
