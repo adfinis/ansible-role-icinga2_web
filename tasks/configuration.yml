@@ -18,7 +18,7 @@
     dest: '/etc/icingaweb2/{{ item }}'
     owner: root
     group: icingaweb2
-    mode: 0644
+    mode: 0660
     seuser: system_u
     serole: object_r
     setype: icingaweb2_config_t
