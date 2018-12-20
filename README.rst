@@ -27,11 +27,56 @@ At Adfinis, we use the following role:
 Role Variables
 ===============
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.)
-should be mentioned here as well.
+.. code-block:: yaml
+
+  # The icingaweb2 web ui password
+  icinga2_web_admin_pass: "passw0rd"
+  
+  # icinga2 API host
+  icinga2_web_api_host: "127.0.0.1"
+  
+  # icinga2 API port
+  icinga2_web_api_port: "5665"
+  
+  # icinga2 API user
+  icinga2_web_api_user: "icingaweb2"
+  
+  # icinga2 API password
+  icinga2_web_api_pass: "passw0rd"
+  
+  
+  ## icingaweb2 database settings
+  # The icingaweb2 database name
+  icinga2_web_icingaweb2_database_name: "icingaweb2"
+  
+  # The icingaweb2 database user
+  icinga2_web_icingaweb2_database_user: "icingaweb2"
+  
+  # The icingaweb2 database password
+  icinga2_web_icingaweb2_database_pass: "passw0rd"
+  
+  # The icingaweb2 database host
+  icinga2_web_icingaweb2_database_host: "127.0.0.1"
+  
+  # The icingaweb2 database port
+  icinga2_web_icingaweb2_database_port: "3306"
+  
+  
+  ## Icinga2 database settings
+  # icinga2 database name
+  icinga2_web_icinga2_database_name: "icinga2"
+  #
+  # icinga2 database host
+  icinga2_web_icinga2_database_host: "127.0.0.1"
+  
+  # icinga2 database port
+  icinga2_web_icinga2_database_port: "3306"
+  
+  # icinga2 database user
+  icinga2_web_icinga2_database_user: "icinga2"
+  
+  # icinga2 database password
+  icinga2_web_icinga2_database_pass: "passw0rd"
 
 
 Dependencies
@@ -41,6 +86,7 @@ This role depends on the following roles:
 
 * `adfinis-sygroup.php_fpm <https://galaxy.ansible.com/adfinis-sygroup/php_fpm>`_
 * `adfinis-sygroup.icinga2_master <https://galaxy.ansible.com/adfinis-sygroup/icinga2_master>`_
+
 
 Example Playbook
 =================
