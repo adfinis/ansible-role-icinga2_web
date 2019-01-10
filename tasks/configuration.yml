@@ -1,1 +1,101 @@
 ---
+
+- name: configure icinga2 ido feature
+  template:
+    src: templates/etc/icinga2/features-available/ido-mysql.conf.j2
+    dest: /etc/icinga2/features-available/ido-mysql.conf
+    owner: icinga
+    group: icinga
+    mode: 0640
+    seuser: system_u
+    serole: object_r
+    setype: icinga2_etc_t
+    selevel: s0
+
+- name: configure icingaweb2
+  template:
+    src: 'templates/etc/icingaweb2/{{ item }}.j2'
+    dest: '/etc/icingaweb2/{{ item }}'
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  with_items:
+    - config.ini
+    - resources.ini
+    - roles.ini
+    - authentication.ini
+
+- name: enable the icingaweb2 monitoring module
+  file:
+    src: /usr/share/icingaweb2/modules/monitoring
+    dest: /etc/icingaweb2/enabledModules/monitoring
+    state: link
+
+- name: ensure icingaweb2 modules directory is present
+  file:
+    name: /etc/icingaweb2/modules/monitoring
+    state: directory
+    owner: root
+    group: icingaweb2
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+
+- name: configure icingaweb2 monitoring module
+  template:
+    src: templates/etc/icingaweb2/modules/monitoring/config.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/config.ini
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+
+- name: configure icingaweb2 monitoring module commandtransport
+  template:
+    src: templates/etc/icingaweb2/modules/monitoring/commandtransports.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/commandtransports.ini
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+
+- name: configure icingaweb2 monitoring module backends
+  template:
+    src: templates/etc/icingaweb2/modules/monitoring/backends.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/backends.ini
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+
+- name: create icingaweb2 admin password hash
+  command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
+  register: icinga2_web_register_admin_hash
+  when: icinga2_web_register_icingaweb2_imported.rc == 1
+
+- name: insert icingaweb2 admin password into database
+  command: |
+    mysql \
+    -h'{{ icinga2_web_icingaweb2_database_host }}' \
+    -u'{{ icinga2_web_icingaweb2_database_user }}' \
+    -p'{{ icinga2_web_icingaweb2_database_pass }}' \
+    -P'{{ icinga2_web_icingaweb2_database_port }}' \
+    '{{ icinga2_web_icingaweb2_database_name }}' \
+    -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES \
+    ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
+  when: icinga2_web_register_icingaweb2_imported.rc == 1 and icinga2_web_register_admin_hash
