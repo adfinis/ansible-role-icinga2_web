@@ -5,4 +5,3 @@ icinga2_web_packages:
   - icingaweb2
   - icingaweb2-selinux
   - icingacli
-  - icinga2-ido-mysql
