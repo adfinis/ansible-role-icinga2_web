@@ -19,29 +19,6 @@
     state: yes
     persistent: yes
 
-- name: check if icinga2 table in mysql exists
-  shell: 'mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"'
-  register: icinga2_web_register_icinga2_imported
-  changed_when: icinga2_web_register_icinga2_imported.rc == 1
-  failed_when: "'Access denied for' in icinga2_web_register_icinga2_imported.stderr"
-
-- name: import icinga2 ido database schema
-  mysql_db:
-    name: '{{ icinga2_web_icinga2_database_name }}'
-    login_host: '{{ icinga2_web_icinga2_database_host }}'
-    login_port: '{{ icinga2_web_icinga2_database_port }}'
-    login_user: '{{ icinga2_web_icinga2_database_user }}'
-    login_password: '{{ icinga2_web_icinga2_database_pass }}'
-    state: import
-    target: /usr/share/icinga2-ido-mysql/schema/mysql.sql
-  when: icinga2_web_register_icinga2_imported.rc == 1
-
-- name: enable icinga2 ido feature
-  file:
-    src: /etc/icinga2/features-available/ido-mysql.conf
-    dest: /etc/icinga2/features-enabled/ido-mysql.conf
-    state: link
-
 # enable and configure the icingaweb2 monitoring module
 - name: check if icingaweb2 table in mysql exists
   shell: 'mysql {{ icinga2_web_icingaweb2_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
