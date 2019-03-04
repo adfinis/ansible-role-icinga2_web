@@ -1,7 +1,6 @@
 ---
 
 dependencies:
-  - name: 'adfinis-sygroup.mariadb'
   - name: 'adfinis-sygroup.icinga2_agent'
   #- name: 'adfinis-sygroup.icinga2_master'
 
