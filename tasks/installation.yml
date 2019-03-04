@@ -21,7 +21,7 @@
 
 - name: check if icinga2 table in mysql exists
   shell: >
-    set -o pipefail;
+    set -o pipefail; 
     mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"
   register: icinga2_web_register_icinga2_imported
   changed_when: icinga2_web_register_icinga2_imported.rc == 1
@@ -45,21 +45,45 @@
     state: link
 
 # enable and configure the icingaweb2 monitoring module
-- name: check if icingaweb2 table in mysql exists
-  shell: 'mysql {{ icinga2_web_icingaweb2_database_name }} -e "SHOW TABLES;" | grep "icingaweb_user"'
+
+- name: check if icingaweb2 table and user in mysql exist
+  shell: >
+    mysql
+    --user={{ icinga2_web_icingaweb2_database_user }}
+    --password={{ icinga2_web_icingaweb2_database_pass }}
+    --host={{ icinga2_web_icingaweb2_database_host }}
+    --ssl-ca={{ icinga2_web_ca_path }}
+    {{ icinga2_web_icingaweb2_database_name }}
+    -e "SHOW TABLES;" | grep "icinga_hosts"
   register: icinga2_web_register_icingaweb2_imported
   changed_when: icinga2_web_register_icingaweb2_imported.rc == 1
   failed_when: "'Access denied for' in icinga2_web_register_icingaweb2_imported.stderr"
 
-- name: import icingaweb2 database schema
+- name: import icingaweb2 database schema using the root user
   mysql_db:
     name: '{{ icinga2_web_icingaweb2_database_name }}'
     login_host: '{{ icinga2_web_icingaweb2_database_host }}'
     login_port: '{{ icinga2_web_icingaweb2_database_port }}'
-    login_user: '{{ icinga2_web_icingaweb2_database_user }}'
-    login_password: '{{ icinga2_web_icingaweb2_database_pass }}'
+    login_user: '{{ icinga2_web_db_root_user }}'
+    login_password: '{{ icinga2_web_db_root_pass }}'
+    ssl_ca: '{{ icinga2_web_ca_path }}'
     state: import
     target: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+  run_once: True
+  when: icinga2_web_register_icingaweb2_imported.rc == 1
+
+- name: create a user with access only to the icingaweb2 database using the root user
+  mysql_user:
+    name: '{{ icinga2_web_icingaweb2_database_user }}'
+    password: '{{ icinga2_web_icingaweb2_database_pass }}'
+    priv: '{{ icinga2_web_icingaweb2_database_name }}.*:ALL'
+    login_host: '{{ icinga2_web_icingaweb2_database_host }}'
+    login_port: '{{ icinga2_web_icingaweb2_database_port }}'
+    login_user: '{{ icinga2_web_db_root_user }}'
+    login_password: '{{ icinga2_web_db_root_pass }}'
+    ssl_ca: '{{ icinga2_web_ca_path }}'
+    state: present
+  run_once: True
   when: icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: ensure icingaweb2 modules directory is present
