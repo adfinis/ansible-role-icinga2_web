@@ -1,1 +1,4 @@
 ---
+
+# path to ca store
+icinga2_master_ca_path: "/etc/ssl/certs/ca-certificates.crt"
