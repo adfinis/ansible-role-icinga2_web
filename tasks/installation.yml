@@ -48,6 +48,7 @@
 
 - name: check if icingaweb2 table and user in mysql exist
   shell: >
+    set -o pipefail;
     mysql
     --user={{ icinga2_web_icingaweb2_database_user }}
     --password={{ icinga2_web_icingaweb2_database_pass }}
