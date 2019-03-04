@@ -7,4 +7,4 @@ icinga2_web_packages:
   - icingacli
 
 # path to ca store
-icinga2_master_ca_path: "/etc/ssl/certs/ca-bundle.crt"
+icinga2_web_ca_path: "/etc/ssl/certs/ca-bundle.crt"
