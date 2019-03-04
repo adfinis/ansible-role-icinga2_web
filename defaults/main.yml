@@ -32,6 +32,13 @@ icinga2_web_icingaweb2_database_host: 127.0.0.1
 # The icingaweb2 database port
 icinga2_web_icingaweb2_database_port: 3306
 
+# A root user on the db host with permissions to
+# add the user specified above (icinga2_web_icingaweb2_database_user)
+icinga2_web_database_root_user: root
+
+# corresponding password to the root user
+icinga2_web_database_root_pass: 'passw0rd'
+
 
 ## Icinga2 database settings
 # icinga2 database name
@@ -48,3 +55,4 @@ icinga2_web_icinga2_database_user: icinga2
 
 # icinga2 database password
 icinga2_web_icinga2_database_pass: 'passw0rd'
+

@@ -5,3 +5,6 @@ icinga2_web_packages:
   - icingaweb2
   - icingaweb2-selinux
   - icingacli
+
+# path to ca store
+icinga2_master_ca_path: "/etc/ssl/certs/ca-bundle.crt"
