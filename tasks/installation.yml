@@ -21,8 +21,8 @@
 
 - name: check if icinga2 table in mysql exists
   shell: >
-    set -o pipefail; 
-    mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"'
+    set -o pipefail;
+    mysql {{ icinga2_web_icinga2_database_name }} -e "SHOW TABLES;" | grep "icinga_hosts"
   register: icinga2_web_register_icinga2_imported
   changed_when: icinga2_web_register_icinga2_imported.rc == 1
   failed_when: "'Access denied for' in icinga2_web_register_icinga2_imported.stderr"
@@ -48,6 +48,7 @@
 
 - name: check if icingaweb2 table and user in mysql exist
   shell: >
+    set -o pipefail;
     mysql
     --user={{ icinga2_web_icingaweb2_database_user }}
     --password={{ icinga2_web_icingaweb2_database_pass }}
