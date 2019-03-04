@@ -6,6 +6,7 @@ icinga2_web_packages:
   - icingaweb2-selinux
   - icingacli
   - MySQL-python
+  - mysql
 
 # path to ca store
 icinga2_web_ca_path: "/etc/ssl/certs/ca-bundle.crt"
