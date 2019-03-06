@@ -77,13 +77,13 @@
   when: icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: insert icingaweb2 admin password into database
-  command: |
-    mysql \
-    -h'{{ icinga2_web_icingaweb2_database_host }}' \
-    -u'{{ icinga2_web_icingaweb2_database_user }}' \
-    -p'{{ icinga2_web_icingaweb2_database_pass }}' \
-    -P'{{ icinga2_web_icingaweb2_database_port }}' \
-    '{{ icinga2_web_icingaweb2_database_name }}' \
-    -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES \
+  command: >
+    mysql
+    -h'{{ icinga2_web_icingaweb2_database_host }}'
+    -u'{{ icinga2_web_icingaweb2_database_user }}'
+    -p'{{ icinga2_web_icingaweb2_database_pass }}'
+    -P'{{ icinga2_web_icingaweb2_database_port }}'
+    '{{ icinga2_web_icingaweb2_database_name }}'
+    -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES
     ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
   when: icinga2_web_register_icingaweb2_imported.rc == 1 and icinga2_web_register_admin_hash
