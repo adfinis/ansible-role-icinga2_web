@@ -51,6 +51,7 @@
     name: '{{ icinga2_web_icingaweb2_database_user }}'
     password: '{{ icinga2_web_icingaweb2_database_pass }}'
     priv: '{{ icinga2_web_icingaweb2_database_name }}.*:ALL'
+    host: '{{ icinga2_web_icingaweb2_database_hostpattern }}'
     login_host: '{{ icinga2_web_icingaweb2_database_host }}'
     login_port: '{{ icinga2_web_icingaweb2_database_port }}'
     login_user: '{{ icinga2_web_database_root_user }}'

@@ -32,6 +32,9 @@ icinga2_web_icingaweb2_database_host: 127.0.0.1
 # The icingaweb2 database port
 icinga2_web_icingaweb2_database_port: 3306
 
+# the hostpattern which can access and login with the icingaweb2 user
+icinga2_web_icingaweb2_database_hostpattern: 'localhost'
+
 # icingaweb2 database ssl connection (1 or 0)
 icinga2_web_icingaweb2_database_ssl: 0
 
