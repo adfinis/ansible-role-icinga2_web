@@ -48,7 +48,7 @@
 
 - name: create a user with access only to the icingaweb2 database using the root user
   mysql_user:
-    name: '{{ icinga2_web_icingaweb2_database_user }}'
+    name: '{{ icinga2_web_icingaweb2_database_user.split("@")[0] }}'
     password: '{{ icinga2_web_icingaweb2_database_pass }}'
     priv: '{{ icinga2_web_icingaweb2_database_name }}.*:ALL'
     login_host: '{{ icinga2_web_icingaweb2_database_host }}'
