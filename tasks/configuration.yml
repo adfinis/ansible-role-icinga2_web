@@ -11,7 +11,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  with_items:
+  loop:
     - config.ini
     - resources.ini
     - roles.ini

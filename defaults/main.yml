@@ -68,3 +68,6 @@ icinga2_web_icinga2_database_ssl: 0
 
 # icinga2 database ssl ca path
 icinga2_web_icinga2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
+
+icinga2_web_modules: []
+ #- graphite
