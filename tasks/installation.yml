@@ -73,3 +73,19 @@
     setype: icingaweb2_config_t
     selevel: s0
   notify: icinga2_web reload icinga2
+
+- name: install modules from github
+  git: # noqa 401
+    repo: 'https://github.com/icinga/icingaweb2-module-{{ item }}.git'
+    dest: '/etc/icingaweb2/modules/{{ item }}'
+    update: no
+  loop: '{{ icinga2_web_modules }}'
+  notify: icinga2_web reload icinga2
+
+- name: enable modules from github
+  file:
+    src: '/etc/icingaweb2/modules/{{ item }}'
+    dest: '/etc/icingaweb2/enabledModules/{{ item }}'
+    state: link
+  loop: '{{ icinga2_web_modules }}'
+  notify: icinga2_web reload icinga2
