@@ -74,7 +74,7 @@
   notify: icinga2_web reload icinga2
 
 - name: install modules from github
-  git:
+  git: # noqa 401
     repo: 'https://github.com/icinga/icingaweb2-module-{{ item }}.git'
     dest: '/etc/icingaweb2/modules/{{ item }}'
     update: no
