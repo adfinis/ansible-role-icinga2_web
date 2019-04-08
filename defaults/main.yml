@@ -113,7 +113,7 @@ icinga2_web_ldap_userconf: []
 #icinga2_web_ldap_groupconf:
 #  - name: group_ldap_example_com # required
 #    resource: 'res_ldap_example_com' # required
-#    user_backend = "user_ldap_examle_com" # required
+#    user_backend: 'user_ldap_examle_com' # required
 #    user_class: 'user' # optional
 #    user_name_attribute: 'uid' # optional
 #    group_class: 'group' # optional
