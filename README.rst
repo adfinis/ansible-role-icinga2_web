@@ -79,6 +79,32 @@ Role Variables
   icinga2_web_icinga2_database_pass: 'passw0rd'
 
 
+Icingaweb2 permissions
+----------------------
+
+.. code-block:: yaml
+
+  # Icinga2 Permissions configuration
+  # For further information, consult the official icingaweb2 documentation at
+  # https://icinga.com/docs/icingaweb2/latest/doc/06-Security/#configuration
+  #
+  #icinga2_web_permissions:
+  #  - name: Administrators
+  #    users:
+  #      - admin
+  #    groups:
+  #      - Administrators
+  #    permissions:
+  #      '*'
+  #    object_filter: ""
+  #  - name: customer
+  #    users:
+  #      - customer1
+  #    permissions:
+  #      'monitoring/command/*,module/*'
+  #    object_filter: 'host_name=*.customer.example.com"'
+
+
 Dependencies
 =============
 
