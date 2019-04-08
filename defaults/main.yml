@@ -74,3 +74,19 @@ icinga2_web_icinga2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
 
 icinga2_web_modules: []
  #- graphite
+
+# Icingaweb2 LDAP authentication
+# For further information, consult the official icingaweb2 documentation at
+# https://icinga.com/docs/icingaweb2/latest/doc/04-Resources/#ldap
+#
+#icinga2_web_ldap:
+#  - name: res_ldap_example_com
+#    host: ldap.example.com
+#    port: 636
+#    encryption: ldaps
+#    root_dn: 'cn=accounts,dc=ldap,dc=example,dc=com'
+#    bind_dn: 'uid=icingaweb2.auth,cn=systems,dc=ldap,dc=example,dc=com'
+#    bind_pw: 'ldap password'
+#    timeout: 5
+
+icinga2_web_ldap: []

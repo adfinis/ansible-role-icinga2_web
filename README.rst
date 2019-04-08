@@ -79,6 +79,28 @@ Role Variables
   icinga2_web_icinga2_database_pass: 'passw0rd'
 
 
+LDAP Authentication
+-------------------
+
+To configure LDAP authentication, the following variables MUST be configured.
+It is possible to enable multiple configuration backends.
+
+.. code-block:: yaml
+
+  # Icingaweb2 LDAP authentication
+  # For further information, consult the official icingaweb2 documentation at
+  # https://icinga.com/docs/icingaweb2/latest/doc/04-Resources/#ldap
+  #icinga2_web_ldap:
+  #  - name: res_ldap_example_com
+  #    host: ldap.example.com
+  #    port: 636
+  #    encryption: ldaps
+  #    root_dn: 'cn=accounts,dc=ldap,dc=example,dc=com'
+  #    bind_dn: 'uid=icingaweb2.auth,cn=systems,dc=ldap,dc=example,dc=com'
+  #    bind_pw: 'ldap password'
+  #    timeout: 5
+
+
 Dependencies
 =============
 
