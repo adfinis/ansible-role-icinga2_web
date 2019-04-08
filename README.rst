@@ -79,6 +79,63 @@ Role Variables
   icinga2_web_icinga2_database_pass: 'passw0rd'
 
 
+LDAP Authentication
+-------------------
+
+To configure LDAP authentication, the following variables MUST be configured.
+It is possible to enable multiple configuration backends.
+
+.. code-block:: yaml
+
+  # Icingaweb2 LDAP authentication
+  # For further information, consult the official icingaweb2 documentation at
+  # https://icinga.com/docs/icingaweb2/latest/doc/04-Resources/#ldap
+  #icinga2_web_ldap:
+  #  - name: res_ldap_example_com
+  #    host: ldap.example.com
+  #    port: 636
+  #    encryption: ldaps
+  #    root_dn: 'cn=accounts,dc=ldap,dc=example,dc=com'
+  #    bind_dn: 'uid=icingaweb2.auth,cn=systems,dc=ldap,dc=example,dc=com'
+  #    bind_pw: 'ldap password'
+  #    timeout: 5
+
+
+.. code-block:: yaml
+
+  # Icingaweb2 LDAP User configuration
+  # For further information, consult the official icingaweb2 documentation at
+  # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap
+  #
+  #icinga2_web_ldap_userconf:
+  #  - name: user_ldap_example_com # required
+  #    resource: 'res_ldap_example_com' # required
+  #    user_class: 'inetOrgPerson' # required
+  #    user_name_attribute: 'uid' # required
+  #    base_dn: 'cn=accounts,dc=ldap,dc=example,dc=com' # optional
+  #    filter: "(somefilter)" # optional
+  
+  icinga2_web_ldap_userconf: []
+
+
+.. code-block:: yaml
+
+  # Icingaweb2 LDAP Group configuration
+  # For further information, consult the official icingaweb2 documentation at
+  # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap-groups
+  #
+  #icinga2_web_ldap_groupconf:
+  #  - name: group_ldap_example_com # required
+  #    resource: 'res_ldap_example_com' # required
+  #    user_backend = "user_ldap_examle_com" # required
+  #    user_class: 'user' # optional
+  #    user_name_attribute: 'uid' # optional
+  #    group_class: 'group' # optional
+  #    group_name_attribute: 'gid' # optional
+  #    group_member_attribute: 'memberUid' # optional
+  #    group_filter: '(somefilter)' # optional
+
+
 Icingaweb2 permissions
 ----------------------
 

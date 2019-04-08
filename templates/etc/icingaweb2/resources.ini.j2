@@ -24,3 +24,15 @@ password = "{{ icinga2_web_icinga2_database_pass }}"
 charset = "utf8"
 use_ssl = "{{ icinga2_web_icinga2_database_ssl }}"
 ssl_ca = "{{ icinga2_web_icinga2_database_ssl_ca }}"
+
+{% for resourceconf in icinga2_web_ldap %}
+[{{ resourceconf.name }}]
+type = "ldap"
+hostname = "{{ resourceconf.host }}"
+port = "{{ resourceconf.port }}"
+encryption = "{{ resourceconf.encryption }}"
+root_dn = "{{ resourceconf.root_dn }}"
+bind_dn = "{{ resourceconf.bind_dn }}"
+bind_pw = "{{ resourceconf.bind_pw }}"
+timeout = "{{ resourceconf.timeout }}"
+{% endfor %}
