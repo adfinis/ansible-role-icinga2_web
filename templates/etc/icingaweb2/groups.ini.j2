@@ -4,3 +4,28 @@
 [icingaweb2]
 backend = "db"
 resource = "icingaweb_db
+
+{% for groupconf in icinga2_web_ldap_groupconf %}
+[{{ groupconf.name }}]
+backend = "ldap"
+resource = "{{ groupconf.resource }}"
+user_backend = "{{ groupconf.user_backend }}"
+{% if groupconf.user_class is defined %}
+user_class = "{{ groupconf.user_class }}"
+{% endif %}
+{% if groupconf.user_name_attribute is defined %}
+user_name_attribute = "{{ groupconf.user_name_attribute }}"
+{% endif %}
+{% if groupconf.group_class is defined %}
+group_class = "{{ groupconf.group_class }}"
+{% endif %}
+{% if groupconf.group_name_attribute is defined %}
+group_name_attribute = "{{ groupconf.group_name_attribute }}"
+{% endif %}
+{% if groupconf.group_member_attribute is defined %}
+group_member_attribute = "{{ groupconf.group_member_attribute }}"
+{% endif %}
+{% if groupconf.group_filter is defined %}
+group_filter = "{{ group_filter }}"
+{% endif %}
+{% endfor %}

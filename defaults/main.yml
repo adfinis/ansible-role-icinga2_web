@@ -104,3 +104,21 @@ icinga2_web_ldap: []
 #    filter: "(somefilter)" # optional
 
 icinga2_web_ldap_userconf: []
+
+
+# Icingaweb2 LDAP Group configuration
+# For further information, consult the official icingaweb2 documentation at
+# https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap-groups
+#
+#icinga2_web_ldap_groupconf:
+#  - name: group_ldap_example_com # required
+#    resource: 'res_ldap_example_com' # required
+#    user_backend = "user_ldap_examle_com" # required
+#    user_class: 'user' # optional
+#    user_name_attribute: 'uid' # optional
+#    group_class: 'group' # optional
+#    group_name_attribute: 'gid' # optional
+#    group_member_attribute: 'memberUid' # optional
+#    group_filter: '(somefilter)' # optional
+
+icinga2_web_ldap_groupconf: []
