@@ -4,3 +4,17 @@
 [icingaweb2]
 backend = "db"
 resource = "icingaweb_db"
+
+{% for userconf in icinga2_web_ldap_userconf %}
+[{{ userconf.name }}]
+backend = "ldap"
+resource = "{{ userconf.resource }}"
+user_class = "{{ userconf.user_class }}"
+user_name_attribute = "{{ userconf.user_name_attribute }}"
+{% if userconf.base_dn is defined %}
+base_dn = "{{ userconf.base_dn }}"
+{% endif %}
+{% if userconf.filter is defined %}
+filter = "{{ userconf.filter }}"
+{% endif %}
+{% endfor %}

@@ -90,3 +90,17 @@ icinga2_web_modules: []
 #    timeout: 5
 
 icinga2_web_ldap: []
+
+# Icingaweb2 LDAP User configuration
+# For further information, consult the official icingaweb2 documentation at
+# https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap
+#
+#icinga2_web_ldap_userconf:
+#  - name: user_ldap_example_com # required
+#    resource: 'res_ldap_example_com' # required
+#    user_class: 'inetOrgPerson' # required
+#    user_name_attribute: 'uid' # required
+#    base_dn: 'cn=accounts,dc=ldap,dc=example,dc=com' # optional
+#    filter: "(somefilter)" # optional
+
+icinga2_web_ldap_userconf: []
