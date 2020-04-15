@@ -1,0 +1,7 @@
+;{{ ansible_managed }}
+; Configuration from Icingaweb2 version 2.6.2-1
+
+{% for resourceconf in icinga2_web_director %}
+[db]
+resource = "{{ resourceconf.name }}"
+{% endfor %}
