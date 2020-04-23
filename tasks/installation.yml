@@ -76,16 +76,53 @@
 
 - name: install modules from github
   git: # noqa 401
-    repo: 'https://github.com/icinga/icingaweb2-module-{{ item }}.git'
-    dest: '/etc/icingaweb2/modules/{{ item }}'
-    update: no
+    repo: 'https://github.com/icinga/icingaweb2-module-{{ item.name }}.git'
+    dest: '/etc/icingaweb2/modules/{{ item.name }}'
+    version: '{{ item.version }}'
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
 
 - name: enable modules from github
   file:
-    src: '/etc/icingaweb2/modules/{{ item }}'
-    dest: '/etc/icingaweb2/enabledModules/{{ item }}'
+    src: '/etc/icingaweb2/modules/{{ item.name }}'
+    dest: '/etc/icingaweb2/enabledModules/{{ item.name }}'
     state: link
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
+
+- name: create icingaweb2 director user for background daemon
+  user:
+    name: icingadirector
+    group: icingaweb2
+    shell: '/bin/false'
+    home: '/var/lib/icingadirector'
+    system: yes
+  when: icinga2_web_director | length != 0
+
+- name: create home directory for icingaweb2 director daemon user
+  file:
+    name: /var/lib/icingadirector
+    state: directory
+    owner: icingadirector
+    group: icingaweb2
+    mode: 0750
+    seuser: system_u
+    serole: object_r
+    setype: var_lib_t
+    selevel: s0
+  when: icinga2_web_director | length != 0
+
+- name: install systemd service for icingaweb2 director daemon
+  copy:
+    src: /etc/icingaweb2/modules/director/contrib/systemd/icinga-director.service
+    remote_src: yes
+    dest: /etc/systemd/system
+  when: icinga2_web_director | length != 0
+
+- name: enable and start systemd service for icingaweb2 director daemon
+  systemd:
+    name: icinga-director.service
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  when: icinga2_web_director | length != 0

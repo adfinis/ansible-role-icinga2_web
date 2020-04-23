@@ -36,3 +36,17 @@ bind_dn = "{{ resourceconf.bind_dn }}"
 bind_pw = "{{ resourceconf.bind_pw }}"
 timeout = "{{ resourceconf.timeout }}"
 {% endfor %}
+
+{% for resourceconf in icinga2_web_director %}
+[{{ resourceconf.name }}]
+type = "db"
+db = "{{ resourceconf.db }}"
+host = "{{ resourceconf.host }}"
+port = "{{ resourceconf.port }}"
+dbname = "{{ resourceconf.dbname }}"
+username = "{{ resourceconf.username }}"
+password = "{{ resourceconf.password }}"
+charset = "{{ resourceconf.charset }}"
+use_ssl = "{{ resourceconf.use_ssl }}"
+ssl_ca = "{{ resourceconf.ssl_ca }}"
+{% endfor %}

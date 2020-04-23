@@ -15,6 +15,17 @@ icinga2_web_api_user: icingaweb2
 # icinga2 API password
 icinga2_web_api_pass: 'passw0rd'
 
+# icinga2 director API host
+icinga2_web_director_api_host: 127.0.0.1
+
+# icinga2 director API port
+icinga2_web_director_api_port: 5665
+
+# icinga2 director API user
+icinga2_web_director_api_user: director
+
+# icinga2 director API password
+icinga2_web_director_api_pass: 'passw0rd'
 
 ## icingaweb2 database settings
 # The icingaweb2 database name
@@ -73,7 +84,16 @@ icinga2_web_icinga2_database_ssl: 0
 icinga2_web_icinga2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
 
 icinga2_web_modules: []
- #- graphite
+ #- name: graphite
+ #  version: master
+ #- name: ipl
+ #  version: v0.5.0
+ #- name: incubator
+ #  version: v0.5.0
+ #- name: reactbundle
+ #  version: v0.7.0
+ #- name: director
+ #  version: v1.7.2
 
 # Icingaweb2 LDAP authentication
 # For further information, consult the official icingaweb2 documentation at
@@ -143,3 +163,21 @@ icinga2_web_ldap_groupconf: []
 #    object_filter: 'host_name=*.customer.example.com"'
 
 icinga2_web_permissions: []
+
+# Director Resources configuration
+# For further information, consult the official icingaweb2 documentation at
+# https://icinga.com/docs/director/latest/doc/03-Automation/
+
+#icinga2_web_director:
+#  - name: 'director_db'
+#    db: 'mysql'
+#    host: 'db.example.com'
+#    port: '3306'
+#    dbname: 'director'
+#    username: 'director@example.com'
+#    password: '3xample'
+#    charset: 'utf-8'
+#    use_ssl: '1'
+#    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
+
+icinga2_web_director: []

@@ -71,6 +71,36 @@
     setype: icingaweb2_config_t
     selevel: s0
 
+- name: configure icingaweb2 director module
+  template:
+    src: templates/etc/icingaweb2/modules/director/config.ini.j2
+    dest: /etc/icingaweb2/modules/director/config.ini
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_director | length != 0
+
+- name: configure icingaweb2 director module api
+  template:
+    src: templates/etc/icingaweb2/modules/director/kickstart.ini.j2
+    dest: /etc/icingaweb2/modules/director/kickstart.ini
+    owner: root
+    group: icingaweb2
+    mode: 0660
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_director | length != 0
+
+- name: configure icingaweb2 director database
+  command: icingacli director migration run
+  when: icinga2_web_director | length != 0
+
 - name: create icingaweb2 admin password hash
   command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
