@@ -162,7 +162,14 @@ icinga2_web_ldap_groupconf: []
 #      'monitoring/command/*,module/*'
 #    object_filter: 'host_name=*.customer.example.com"'
 
-icinga2_web_permissions: []
+icinga2_web_permissions:
+  - name: Administrators
+    users:
+      - admin
+    groups:
+      - Administrators
+    permissions:
+     - '*'
 
 # Director Resources configuration
 # For further information, consult the official icingaweb2 documentation at
