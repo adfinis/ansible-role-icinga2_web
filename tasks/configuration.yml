@@ -22,6 +22,7 @@
     src: /usr/share/icingaweb2/modules/monitoring
     dest: /etc/icingaweb2/enabledModules/monitoring
     state: link
+    mode: 0755
 
 - name: ensure icingaweb2 modules directory is present
   file:

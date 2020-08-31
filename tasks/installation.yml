@@ -87,6 +87,7 @@
     src: '/etc/icingaweb2/modules/{{ item.name }}'
     dest: '/etc/icingaweb2/enabledModules/{{ item.name }}'
     state: link
+    mode: 0755
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
 
@@ -117,6 +118,7 @@
     src: /etc/icingaweb2/modules/director/contrib/systemd/icinga-director.service
     remote_src: yes
     dest: /etc/systemd/system
+    mode: 0644
   when: icinga2_web_director | length != 0
 
 - name: enable and start systemd service for icingaweb2 director daemon

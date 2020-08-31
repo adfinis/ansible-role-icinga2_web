@@ -1,11 +1,6 @@
 ;{{ ansible_managed }}
 ; Configuration from Icingaweb2 version 2.6.2-1
 
-[Administrators]
-users = "admin"
-permissions = "*"
-groups = "Administrators"
-
 {% for item in icinga2_web_permissions %}
 [{{ item.name }}]
 {% if item.users is defined %}
