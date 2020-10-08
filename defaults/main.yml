@@ -188,3 +188,19 @@ icinga2_web_permissions:
 #    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_director: []
+
+# Reporting resources configuration
+
+#icinga2_web_reporting:
+#  - name: 'reporting_db'
+#    db: 'mysql'
+#    host: 'db.example.com'
+#    port: '3306'
+#    dbname: 'reporting'
+#    username: 'reporting@example.com'
+#    password: '3xample'
+#    charset: 'utf8mb4'
+#    use_ssl: '1'
+#    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
+
+icinga2_web_reporting: []
