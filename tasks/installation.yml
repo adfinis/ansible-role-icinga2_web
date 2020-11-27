@@ -44,7 +44,9 @@
     state: import
     target: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
   run_once: True
-  when: icinga2_web_register_icingaweb2_imported.rc == 1
+  when: 
+    - not ansible_check_mode
+    - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: create a user with access only to the icingaweb2 database using the root user
   mysql_user:
@@ -59,7 +61,9 @@
     ssl_ca: '{{ icinga2_web_ca_path }}'
     state: present
   run_once: True
-  when: icinga2_web_register_icingaweb2_imported.rc == 1
+  when: 
+    - not ansible_check_mode
+    - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: ensure icingaweb2 modules directory is present
   file:
