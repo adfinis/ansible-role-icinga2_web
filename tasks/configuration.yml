@@ -118,7 +118,9 @@
 - name: create icingaweb2 admin password hash
   command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
-  when: icinga2_web_register_icingaweb2_imported.rc == 1
+  when:
+    - not ansible_check_mode
+    - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: insert icingaweb2 admin password into database
   command: >
@@ -130,4 +132,7 @@
     '{{ icinga2_web_icingaweb2_database_name }}'
     -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES
     ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
-  when: icinga2_web_register_icingaweb2_imported.rc == 1 and icinga2_web_register_admin_hash
+  when:
+    - not ansible_check_mode
+    - icinga2_web_register_icingaweb2_imported.rc == 1
+    - icinga2_web_register_admin_hash
