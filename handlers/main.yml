@@ -4,3 +4,8 @@
   service:
     name: icinga2
     state: reloaded
+
+- name: icinga2_web restart grafana-server
+  service:
+    name: grafana-server
+    state: restarted
