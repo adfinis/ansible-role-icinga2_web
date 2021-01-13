@@ -132,3 +132,30 @@
     daemon_reload: yes
     enabled: yes
   when: icinga2_web_director | length != 0
+
+- name: add grafana repository
+  yum_repository:
+    name: grafana
+    description: grafana
+    baseurl: https://packages.grafana.com/oss/rpm
+    repo_gpgcheck: yes
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://packages.grafana.com/gpg.key
+    sslverify: yes
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+  when: icinga2_web_grafana.enabled
+
+- name: install grafana
+  yum:
+    name: grafana
+    state: present
+  when: icinga2_web_grafana.enabled
+
+- name: enable and start grafana service
+  systemd:
+    name: grafana-server
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  when: icinga2_web_grafana.enabled

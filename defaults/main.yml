@@ -204,3 +204,22 @@ icinga2_web_director: []
 #    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_reporting: []
+
+# Grafana configuration
+icinga2_web_grafana:
+  enabled: false
+  #domain: example.com
+  #oidc:
+    #enabled: true
+    #config:
+      #name: Example SSO
+      #allow_sign_up: true
+      #client_id: example-client
+      #client_secret: example-secret
+      #scopes: openid,email,profile
+      #email_attribute_name: email
+      #email_attribute_path: email
+      #auth_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/auth
+      #token_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/token
+      #api_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/userinfo
+      #role_attribute_path: contains(groups[*], '/admin') && 'Admin'
