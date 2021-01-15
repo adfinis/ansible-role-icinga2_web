@@ -16,6 +16,7 @@
     - resources.ini
     - roles.ini
     - authentication.ini
+    - groups.ini
 
 - name: enable the icingaweb2 monitoring module
   file:
