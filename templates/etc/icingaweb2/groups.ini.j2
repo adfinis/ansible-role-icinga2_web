@@ -1,9 +1,11 @@
 ;{{ ansible_managed }}
 ; Configuration from Icingaweb2 version 2.6.2-1
 
-[icingaweb2]
-backend = "db"
-resource = "icingaweb_db
+{% for groupconf in icinga2_web_database_groupconf %}
+[{{ groupconf.name }}]
+backend = "{{ groupconf.backend }}"
+resource = "{{ groupconf.resource }}"
+{% endfor %}
 
 {% for groupconf in icinga2_web_ldap_groupconf %}
 [{{ groupconf.name }}]

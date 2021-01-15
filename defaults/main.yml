@@ -142,6 +142,17 @@ icinga2_web_ldap_userconf: []
 
 icinga2_web_ldap_groupconf: []
 
+# Icingaweb2 database group configuration
+# For further information, consult the official icingaweb2 documentation at
+# https://icinga.com/docs/icinga-web-2/latest/doc/05-Authentication/#database-groups
+#
+#icinga2_web_database_groupconf:
+#  - name: icingaweb2
+#    backend: db
+#    resource: icingaweb_db
+#
+icinga2_web_database_groupconf: []
+
 # Icinga2 Permissions configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/06-Security/#configuration
