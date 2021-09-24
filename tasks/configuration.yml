@@ -11,12 +11,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  loop:
-    - config.ini
-    - resources.ini
-    - roles.ini
-    - authentication.ini
-    - groups.ini
+  loop: '{{ icinga2_web_managed_config_files }}'
 
 - name: enable the icingaweb2 monitoring module
   file:
