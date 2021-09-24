@@ -83,6 +83,14 @@ icinga2_web_icinga2_database_ssl: 0
 # icinga2 database ssl ca path
 icinga2_web_icinga2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
 
+# icingaweb2 managed config files
+icinga2_web_managed_config_files:
+  - config.ini
+  - resources.ini
+  - roles.ini
+  - authentication.ini
+  - groups.ini
+
 icinga2_web_modules: []
  #- name: graphite
  #  version: master
