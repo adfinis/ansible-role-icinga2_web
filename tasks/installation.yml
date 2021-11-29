@@ -72,6 +72,14 @@
     owner: root
     group: icingaweb2
     mode: 0755
+
+- name: ensure icingaweb2 modules directory is present and set selinux
+  file:
+    name: /etc/icingaweb2/enabledModules
+    state: directory
+    owner: root
+    group: icingaweb2
+    mode: 0755
     seuser: system_u
     serole: object_r
     setype: icingaweb2_config_t
