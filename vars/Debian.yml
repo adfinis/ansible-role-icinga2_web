@@ -1,4 +1,14 @@
 ---
 
+# package list needed for icingaweb2
+icinga2_web_packages:
+  - icingaweb2
+  - icingacli
+  - python3-pymysql
+  - python3-selinux
+  - python3-semanage
+  - mariadb-client
+  - git
+
 # path to ca store
 icinga2_web_ca_path: "/etc/ssl/certs/ca-certificates.crt"
