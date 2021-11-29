@@ -1,6 +1,6 @@
 ---
 
-# mysql.schema.sql path for debian
+# mysql.schema.sql path for distributions based on redhat
 icinga2_web_mysql_schema_sql_path: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
 
 # package list needed for icingaweb2
