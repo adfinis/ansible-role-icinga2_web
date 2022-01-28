@@ -42,7 +42,7 @@
     login_password: '{{ icinga2_web_database_root_pass }}'
     ssl_ca: '{{ icinga2_web_ca_path }}'
     state: import
-    target: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+    target: '{{ icinga2_web_mysql_schema_sql_path }}'
   run_once: True
   when:
     - not ansible_check_mode
@@ -66,6 +66,14 @@
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: ensure icingaweb2 modules directory is present
+  file:
+    name: /etc/icingaweb2/enabledModules
+    state: directory
+    owner: root
+    group: icingaweb2
+    mode: 0755
+
+- name: ensure icingaweb2 modules directory is present and set selinux
   file:
     name: /etc/icingaweb2/enabledModules
     state: directory
