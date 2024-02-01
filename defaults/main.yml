@@ -102,6 +102,8 @@ icinga2_web_modules: []
  #  version: v0.7.0
  #- name: director
  #  version: v1.7.2
+ #- name: audit
+ #  version: v1.0.2
 
 # Icingaweb2 LDAP authentication
 # For further information, consult the official icingaweb2 documentation at
