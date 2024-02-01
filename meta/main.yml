@@ -19,6 +19,7 @@ galaxy_info:
     - 'icinga2'
     - 'monitoring'
     - 'icingaweb2'
+  github_branch: master
 
 collections:
   - ansible.posix
