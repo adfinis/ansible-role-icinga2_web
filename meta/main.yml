@@ -19,3 +19,7 @@ galaxy_info:
     - 'icinga2'
     - 'monitoring'
     - 'icingaweb2'
+
+collections:
+  - ansible.posix
+  - community.general
