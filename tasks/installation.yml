@@ -110,6 +110,7 @@
   ansible.posix.patch:
     src: 0001-icingaweb2-module-audit-remote-ip-logging.patch
     basedir: /usr/share/icingaweb2/modules/audit
+    strip: 1
 
 - name: create icingaweb2 director user for background daemon
   user:
