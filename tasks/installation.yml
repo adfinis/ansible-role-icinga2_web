@@ -92,7 +92,7 @@
 
 - name: install modules from github
   git: # noqa 401
-    repo: 'https://github.com/icinga/icingaweb2-module-{{ item.name }}.git'
+    repo: '{{ item.url }}'
     dest: '/etc/icingaweb2/modules/{{ item.name }}'
     version: '{{ item.version }}'
   loop: '{{ icinga2_web_modules }}'
@@ -106,15 +106,6 @@
     mode: 0755
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
-
-  ##
-  # @TODO: This can be removed once https://github.com/Icinga/icingaweb2-module-audit/pull/9 has been merged!!
-  ##
-- name: Patch icingaweb2 audit module to include remote ip logging
-  ansible.posix.patch:
-    src: 0001-icingaweb2-module-audit-remote-ip-logging.patch
-    basedir: /usr/share/icingaweb2/modules/audit
-    strip: 1
 
 - name: create icingaweb2 director user for background daemon
   user:
