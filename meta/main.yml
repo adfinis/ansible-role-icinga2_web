@@ -5,9 +5,10 @@ dependencies:
 
 galaxy_info:
   role_name: 'icinga2_web'
-  author: 'Adfinis SyGroup AG'
+  namespace: adfinis
+  author: 'Adfinis AG'
   description: 'This role installs and configures icingaweb2'
-  company: 'Adfinis SyGroup AG'
+  company: 'Adfinis AG'
   license: 'GNU General Public License v3'
   min_ansible_version: '2.6.0'
   platforms:
