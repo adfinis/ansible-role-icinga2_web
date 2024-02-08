@@ -91,7 +91,7 @@
   notify: icinga2_web reload icinga2
 
 - name: install modules from github
-  git: # noqa 401
+  ansible.builtin.git:
     repo: '{{ item.url }}'
     dest: '/etc/icingaweb2/modules/{{ item.name }}'
     version: '{{ item.version }}'
