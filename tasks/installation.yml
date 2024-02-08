@@ -1,30 +1,30 @@
 ---
 
-- name: install icinga2 web packages
-  package:
+- name: Install icinga2 web packages
+  ansible.builtin.package:
     name: '{{ icinga2_web_packages }}'
     state: present
 
-- name: install fail2ban using role
+- name: Install fail2ban using role
   ansible.builtin.include_role:
     name: robertdebock.roles.fail2ban
 
 # Allow httpd to connect to the mysql database
-- name: set httpd_can_network_connect_db flag on and keep it persistent across reboots
-  seboolean:
+- name: Set httpd_can_network_connect_db flag on and keep it persistent across reboots
+  ansible.posix.seboolean:
     name: httpd_can_network_connect_db
-    state: yes
-    persistent: yes
+    state: true
+    persistent: true
 
 # Allow httpd to connect to the network
-- name: set httpd_can_network_connect flag on and keep it persistent across reboots
-  seboolean:
+- name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+  ansible.posix.seboolean:
     name: httpd_can_network_connect
-    state: yes
-    persistent: yes
+    state: true
+    persistent: true
 
-- name: check if icingaweb2 table and user in mysql exist
-  shell: >
+- name: Check if icingaweb2 table and user in mysql exist
+  ansible.builtin.shell: >
     set -o pipefail;
     mysql
     --user={{ icinga2_web_database_root_user }}
@@ -37,8 +37,8 @@
   changed_when: icinga2_web_register_icingaweb2_imported.rc == 1
   failed_when: "'Access denied for' in icinga2_web_register_icingaweb2_imported.stderr"
 
-- name: import icingaweb2 database schema using the root user
-  mysql_db:
+- name: Import icingaweb2 database schema using the root user
+  community.mysql.mysql_db:
     name: '{{ icinga2_web_icingaweb2_database_name }}'
     login_host: '{{ icinga2_web_icingaweb2_database_host }}'
     login_port: '{{ icinga2_web_icingaweb2_database_port }}'
@@ -47,13 +47,13 @@
     ssl_ca: '{{ icinga2_web_ca_path }}'
     state: import
     target: '{{ icinga2_web_mysql_schema_sql_path }}'
-  run_once: True
+  run_once: true
   when:
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: create a user with access only to the icingaweb2 database using the root user
-  mysql_user:
+- name: Create a user with access only to the icingaweb2 database using the root user
+  community.mysql.mysql_user:
     name: '{{ icinga2_web_icingaweb2_database_user.split("@")[0] }}'
     password: '{{ icinga2_web_icingaweb2_database_pass }}'
     priv: '{{ icinga2_web_icingaweb2_database_name }}.*:ALL'
@@ -64,33 +64,33 @@
     login_password: '{{ icinga2_web_database_root_pass }}'
     ssl_ca: '{{ icinga2_web_ca_path }}'
     state: present
-  run_once: True
+  run_once: true
   when:
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: ensure icingaweb2 modules directory is present
-  file:
+- name: Ensure icingaweb2 modules directory is present
+  ansible.builtin.file:
     name: /etc/icingaweb2/enabledModules
     state: directory
     owner: root
     group: icingaweb2
-    mode: 0755
+    mode: "0755"
 
-- name: ensure icingaweb2 modules directory is present and set selinux
-  file:
+- name: Ensure icingaweb2 modules directory is present and set selinux
+  ansible.builtin.file:
     name: /etc/icingaweb2/enabledModules
     state: directory
     owner: root
     group: icingaweb2
-    mode: 0755
+    mode: "0755"
     seuser: system_u
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
   notify: icinga2_web reload icinga2
 
-- name: install modules from github
+- name: Install modules from github
   ansible.builtin.git:
     repo: '{{ item.url }}'
     dest: '/etc/icingaweb2/modules/{{ item.name }}'
@@ -98,76 +98,76 @@
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
 
-- name: enable modules from github
-  file:
+- name: Enable modules from github
+  ansible.builtin.file:
     src: '/etc/icingaweb2/modules/{{ item.name }}'
     dest: '/etc/icingaweb2/enabledModules/{{ item.name }}'
     state: link
-    mode: 0755
+    mode: "0755"
   loop: '{{ icinga2_web_modules }}'
   notify: icinga2_web reload icinga2
 
-- name: create icingaweb2 director user for background daemon
-  user:
+- name: Create icingaweb2 director user for background daemon
+  ansible.builtin.user:
     name: icingadirector
     group: icingaweb2
     shell: '/bin/false'
     home: '/var/lib/icingadirector'
-    system: yes
+    system: true
   when: icinga2_web_director | length != 0
 
-- name: create home directory for icingaweb2 director daemon user
-  file:
+- name: Create home directory for icingaweb2 director daemon user
+  ansible.builtin.file:
     name: /var/lib/icingadirector
     state: directory
     owner: icingadirector
     group: icingaweb2
-    mode: 0750
+    mode: "0750"
     seuser: system_u
     serole: object_r
     setype: var_lib_t
     selevel: s0
   when: icinga2_web_director | length != 0
 
-- name: install systemd service for icingaweb2 director daemon
-  copy:
+- name: Install systemd service for icingaweb2 director daemon
+  ansible.builtin.copy:
     src: /etc/icingaweb2/modules/director/contrib/systemd/icinga-director.service
-    remote_src: yes
+    remote_src: true
     dest: /etc/systemd/system
-    mode: 0644
+    mode: "0644"
   when: icinga2_web_director | length != 0
 
-- name: enable and start systemd service for icingaweb2 director daemon
-  systemd:
+- name: Enable and start systemd service for icingaweb2 director daemon
+  ansible.builtin.systemd_service:
     name: icinga-director.service
     state: started
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
   when: icinga2_web_director | length != 0
 
-- name: add grafana repository
-  yum_repository:
+- name: Add grafana repository
+  ansible.builtin.yum_repository:
     name: grafana
     description: grafana
     baseurl: https://packages.grafana.com/oss/rpm
-    repo_gpgcheck: yes
-    enabled: yes
-    gpgcheck: yes
+    repo_gpgcheck: true
+    enabled: true
+    gpgcheck: true
     gpgkey: https://packages.grafana.com/gpg.key
-    sslverify: yes
+    sslverify: true
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
   when: icinga2_web_grafana.enabled
 
-- name: install grafana
-  yum:
+- name: Install grafana
+  ansible.builtin.yum:
     name: grafana
     state: present
   when: icinga2_web_grafana.enabled
 
-- name: enable and start grafana service
-  systemd:
+- name: Enable and start grafana service
+  ansible.builtin.systemd_service:
     name: grafana-server
     state: started
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
   when: icinga2_web_grafana.enabled
