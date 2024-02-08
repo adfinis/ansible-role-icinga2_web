@@ -1,0 +1,9 @@
+---
+
+roles:
+  - name: adfinis-sygroup.icinga2_agent
+
+collections:
+  - ansible.posix
+  - community.general
+  - robertdebock.roles
