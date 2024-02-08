@@ -3,9 +3,9 @@ name: CI - Linting
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   # This workflow contains a single job called "build"
@@ -24,7 +24,7 @@ jobs:
           path: lint-rules
 
       - name: ansible-lint
-        uses: ansible/ansible-lint-action@master
+        uses: ansible/ansible-lint@main
         with:
           targets: icinga2_web
           args: "-R -r lint-rules"
