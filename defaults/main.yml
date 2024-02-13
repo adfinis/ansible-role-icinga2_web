@@ -92,30 +92,38 @@ icinga2_web_managed_config_files:
   - groups.ini
 
 icinga2_web_modules: []
- #- name: graphite
- #  version: master
- #- name: ipl
- #  version: v0.5.0
- #- name: incubator
- #  version: v0.5.0
- #- name: reactbundle
- #  version: v0.7.0
- #- name: director
- #  version: v1.7.2
+#  - name: graphite
+#    url: 'https://github.com/icinga/icingaweb2-module-graphite.git'
+#    version: master
+#  - name: ipl
+#    url: 'https://github.com/icinga/icingaweb2-module-ipl.git'
+#    version: v0.5.0
+#  - name: incubator
+#    url: 'https://github.com/icinga/icingaweb2-module-incubator.git'
+#    version: v0.5.0
+#  - name: reactbundle
+#    url: 'https://github.com/icinga/icingaweb2-module-reactbundle.git'
+#    version: v0.7.0
+#  - name: director
+#    url: 'https://github.com/icinga/icingaweb2-module-director.git'
+#    version: v1.7.2
+#  - name: audit
+#    url: 'https://github.com/adfinis/icingaweb2-module-audit.git'
+#    version: master
 
 # Icingaweb2 LDAP authentication
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/04-Resources/#ldap
 #
-#icinga2_web_ldap:
-#  - name: res_ldap_example_com
-#    host: ldap.example.com
-#    port: 636
-#    encryption: ldaps
-#    root_dn: 'cn=accounts,dc=ldap,dc=example,dc=com'
-#    bind_dn: 'uid=icingaweb2.auth,cn=systems,dc=ldap,dc=example,dc=com'
-#    bind_pw: 'ldap password'
-#    timeout: 5
+# icinga2_web_ldap:
+#   - name: res_ldap_example_com
+#     host: ldap.example.com
+#     port: 636
+#     encryption: ldaps
+#     root_dn: 'cn=accounts,dc=ldap,dc=example,dc=com'
+#     bind_dn: 'uid=icingaweb2.auth,cn=systems,dc=ldap,dc=example,dc=com'
+#     bind_pw: 'ldap password'
+#     timeout: 5
 
 icinga2_web_ldap: []
 
@@ -123,13 +131,13 @@ icinga2_web_ldap: []
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap
 #
-#icinga2_web_ldap_userconf:
-#  - name: user_ldap_example_com # required
-#    resource: 'res_ldap_example_com' # required
-#    user_class: 'inetOrgPerson' # required
-#    user_name_attribute: 'uid' # required
-#    base_dn: 'cn=accounts,dc=ldap,dc=example,dc=com' # optional
-#    filter: "(somefilter)" # optional
+# icinga2_web_ldap_userconf:
+#   - name: user_ldap_example_com # required
+#     resource: 'res_ldap_example_com' # required
+#     user_class: 'inetOrgPerson' # required
+#     user_name_attribute: 'uid' # required
+#     base_dn: 'cn=accounts,dc=ldap,dc=example,dc=com' # optional
+#     filter: "(somefilter)" # optional
 
 icinga2_web_ldap_userconf: []
 
@@ -137,16 +145,16 @@ icinga2_web_ldap_userconf: []
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap-groups
 #
-#icinga2_web_ldap_groupconf:
-#  - name: group_ldap_example_com # required
-#    resource: 'res_ldap_example_com' # required
-#    user_backend: 'user_ldap_examle_com' # required
-#    user_class: 'user' # optional
-#    user_name_attribute: 'uid' # optional
-#    group_class: 'group' # optional
-#    group_name_attribute: 'gid' # optional
-#    group_member_attribute: 'memberUid' # optional
-#    group_filter: '(somefilter)' # optional
+# icinga2_web_ldap_groupconf:
+#   - name: group_ldap_example_com # required
+#     resource: 'res_ldap_example_com' # required
+#     user_backend: 'user_ldap_examle_com' # required
+#     user_class: 'user' # optional
+#     user_name_attribute: 'uid' # optional
+#     group_class: 'group' # optional
+#     group_name_attribute: 'gid' # optional
+#     group_member_attribute: 'memberUid' # optional
+#     group_filter: '(somefilter)' # optional
 
 icinga2_web_ldap_groupconf: []
 
@@ -154,32 +162,32 @@ icinga2_web_ldap_groupconf: []
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icinga-web-2/latest/doc/05-Authentication/#database-groups
 #
-#icinga2_web_database_groupconf:
-#  - name: icingaweb2
-#    backend: db
-#    resource: icingaweb_db
-#
+# icinga2_web_database_groupconf:
+#   - name: icingaweb2
+#     backend: db
+#     resource: icingaweb_db
+
 icinga2_web_database_groupconf: []
 
 # Icinga2 Permissions configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/06-Security/#configuration
 #
-#icinga2_web_permissions:
-#  - name: Administrators
-#    users:
-#      - admin
-#    groups:
-#      - Administrators
-#    permissions:
-#      '*'
-#    object_filter: ""
-#  - name: customer
-#    users:
-#      - customer1
-#    permissions:
-#      'monitoring/command/*,module/*'
-#    object_filter: 'host_name=*.customer.example.com"'
+# icinga2_web_permissions:
+#   - name: Administrators
+#     users:
+#       - admin
+#     groups:
+#       - Administrators
+#     permissions:
+#       '*'
+#     object_filter: ""
+#   - name: customer
+#     users:
+#       - customer1
+#     permissions:
+#       'monitoring/command/*,module/*'
+#     object_filter: 'host_name=*.customer.example.com"'
 
 icinga2_web_permissions:
   - name: Administrators
@@ -194,51 +202,51 @@ icinga2_web_permissions:
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/director/latest/doc/03-Automation/
 
-#icinga2_web_director:
-#  - name: 'director_db'
-#    db: 'mysql'
-#    host: 'db.example.com'
-#    port: '3306'
-#    dbname: 'director'
-#    username: 'director@example.com'
-#    password: '3xample'
-#    charset: 'utf-8'
-#    use_ssl: '1'
-#    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
+# icinga2_web_director:
+#   - name: 'director_db'
+#     db: 'mysql'
+#     host: 'db.example.com'
+#     port: '3306'
+#     dbname: 'director'
+#     username: 'director@example.com'
+#     password: '3xample'
+#     charset: 'utf-8'
+#     use_ssl: '1'
+#     ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_director: []
 
 # Reporting resources configuration
 
-#icinga2_web_reporting:
-#  - name: 'reporting_db'
-#    db: 'mysql'
-#    host: 'db.example.com'
-#    port: '3306'
-#    dbname: 'reporting'
-#    username: 'reporting@example.com'
-#    password: '3xample'
-#    charset: 'utf8mb4'
-#    use_ssl: '1'
-#    ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
+# icinga2_web_reporting:
+#   - name: 'reporting_db'
+#     db: 'mysql'
+#     host: 'db.example.com'
+#     port: '3306'
+#     dbname: 'reporting'
+#     username: 'reporting@example.com'
+#     password: '3xample'
+#     charset: 'utf8mb4'
+#     use_ssl: '1'
+#     ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_reporting: []
 
 # Grafana configuration
-icinga2_web_grafana:
-  enabled: false
-  #domain: example.com
-  #oidc:
-    #enabled: true
-    #config:
-      #name: Example SSO
-      #allow_sign_up: true
-      #client_id: example-client
-      #client_secret: example-secret
-      #scopes: openid,email,profile
-      #email_attribute_name: email
-      #email_attribute_path: email
-      #auth_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/auth
-      #token_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/token
-      #api_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/userinfo
-      #role_attribute_path: contains(groups[*], '/admin') && 'Admin'
+# icinga2_web_grafana:
+#   enabled: false
+#   domain: example.com
+#   oidc:
+#     enabled: true
+#     config:
+#       name: Example SSO
+#       allow_sign_up: true
+#       client_id: example-client
+#       client_secret: example-secret
+#       scopes: openid,email,profile
+#       email_attribute_name: email
+#       email_attribute_path: email
+#       auth_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/auth
+#       token_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/token
+#       api_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/userinfo
+#       role_attribute_path: contains(groups[*], '/admin') && 'Admin'
