@@ -1,11 +1,11 @@
 ---
 
 - name: Icinga2_web reload icinga2
-  service:
+  ansible.builtin.service:
     name: icinga2
     state: reloaded
 
 - name: Icinga2_web restart grafana-server
-  service:
+  ansible.builtin.service:
     name: grafana-server
     state: restarted
