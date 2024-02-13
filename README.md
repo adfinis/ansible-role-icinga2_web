@@ -174,7 +174,7 @@ icinga2_web_ldap_userconf: []
 
 # License
 
-[GPL-3.0](https://github.com/adfinis-sygroup/ansible-role-icinga2_web/blob/master/LICENSE)
+[GPL-3.0](https://github.com/adfinis/ansible-role-icinga2_web/blob/master/LICENSE)
 
 # Author Information
 
