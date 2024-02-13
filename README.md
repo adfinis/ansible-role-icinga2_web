@@ -16,6 +16,24 @@ the system. At Adfinis, we use the following role:
 
 -   [adfinis-sygroup.nginx](https://galaxy.ansible.com/adfinis-sygroup/nginx)
 
+## Role dependencies
+This role has the following dependencies:
+
+``` yaml
+roles:
+- name: 'adfinis.icinga2_agent'
+
+collections:
+  - ansible.posix
+  - community.general
+  - community.mysql
+  - robertdebock.roles
+```
+
+For all dependencies to be correcty installed, you need to create a
+`requirements.yml` in your project with the content above.
+
+
 # Role Variables
 
 ``` yaml
@@ -145,24 +163,6 @@ icinga2_web_ldap_userconf: []
 #      'monitoring/command/*,module/*'
 #    object_filter: 'host_name=*.customer.example.com"'
 ```
-
-# Dependencies
-
-This role has the following dependencies:
-
-``` yaml
-roles:
-- name: 'adfinis.icinga2_agent'
-
-collections:
-  - ansible.posix
-  - community.general
-  - community.mysql
-  - robertdebock.roles
-```
-
-For all dependencies to be correcty installed, you need to create a
-`requirements.yml` in your project with the content above.
 
 # Example Playbook
 
