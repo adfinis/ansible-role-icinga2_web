@@ -5,7 +5,7 @@ ROLE ICINGA2_WEB
 
 [![image](https://img.shields.io/github/actions/workflow/status/adfinis/ansible-role-icinga2_web/ansible-ci.yml?branch=master&style=flat-square)](https://github.com/adfinis/ansible-role-icinga2_web/actions/workflows/ansible-ci.yml)
 
-[![image](https://img.shields.io/badge/galaxy-adfinis.icinga2_web-660198.svg?style=flat-square)](https://galaxy.ansible.com/ui/standalone/roles/adfinis/icinga2_client/)
+[![image](https://img.shields.io/badge/galaxy-adfinis.icinga2_web-660198.svg?style=flat-square)](https://galaxy.ansible.com/ui/standalone/roles/adfinis/icinga2_web/)
 
 This role installs and configures icingaweb2.
 
