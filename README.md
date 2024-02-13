@@ -180,6 +180,6 @@ For all dependencies to be correcty installed, you need to create a
 
 icinga2_web role was written by:
 
--   Adfinis SyGroup AG \| [Website](https://www.adfinis-sygroup.ch/) \|
-    [Twitter](https://twitter.com/adfinissygroup) \|
-    [GitHub](https://github.com/adfinis-sygroup)
+-   Adfinis AG \| [Website](https://www.adfinis.com/) \|
+    [Twitter](https://twitter.com/adfinis) \|
+    [GitHub](https://github.com/adfinis)
