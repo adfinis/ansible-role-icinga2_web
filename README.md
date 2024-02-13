@@ -152,7 +152,7 @@ This role has the following dependencies:
 
 ``` yaml
 roles:
-- name: 'adfinis-sygroup.icinga2_agent'
+- name: 'adfinis.icinga2_agent'
 
 collections:
   - ansible.posix
