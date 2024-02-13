@@ -94,7 +94,7 @@
     selevel: s0
   when: icinga2_web_director | length != 0
 
-- name: Configure icingaweb2 director database
+- name: Configure icingaweb2 director database  # noqa no-changed-when
   ansible.builtin.command: icingacli director migration run
   when: icinga2_web_director | length != 0
 
@@ -111,14 +111,14 @@
     selevel: s0
   when: icinga2_web_reporting | length != 0
 
-- name: Create icingaweb2 admin password hash
+- name: Create icingaweb2 admin password hash  # noqa no-changed-when
   ansible.builtin.command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
   when:
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: Insert icingaweb2 admin password into database
+- name: Insert icingaweb2 admin password into database  # noqa no-changed-when
   ansible.builtin.command: >
     mysql
     -h'{{ icinga2_web_icingaweb2_database_host }}'
