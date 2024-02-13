@@ -14,8 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          path: icinga2_web
 
       # Checkout Adfinis lint-rules
       - uses: actions/checkout@v2
