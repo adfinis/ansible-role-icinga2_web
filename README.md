@@ -169,7 +169,7 @@ icinga2_web_ldap_userconf: []
 ``` yaml
 - hosts: servers
   roles:
-     - { role: adfinis-sygroup.icinga2_web }
+     - { role: adfinis.icinga2_web }
 ```
 
 # License
