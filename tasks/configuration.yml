@@ -143,5 +143,5 @@
     seuser: system_u
     serole: object_r
     selevel: s0
-  notify: icinga2_web restart grafana-server
+  notify: Icinga2_web restart grafana-server
   when: icinga2_web_grafana.enabled

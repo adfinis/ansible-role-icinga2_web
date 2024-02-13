@@ -88,7 +88,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  notify: icinga2_web reload icinga2
+  notify: Icinga2_web reload icinga2
 
 - name: Install modules from github
   ansible.builtin.git:
@@ -96,7 +96,7 @@
     dest: '/etc/icingaweb2/modules/{{ item.name }}'
     version: '{{ item.version }}'
   loop: '{{ icinga2_web_modules }}'
-  notify: icinga2_web reload icinga2
+  notify: Icinga2_web reload icinga2
 
 - name: Enable modules from github
   ansible.builtin.file:
@@ -105,7 +105,7 @@
     state: link
     mode: "0755"
   loop: '{{ icinga2_web_modules }}'
-  notify: icinga2_web reload icinga2
+  notify: Icinga2_web reload icinga2
 
 - name: Create icingaweb2 director user for background daemon
   ansible.builtin.user:
