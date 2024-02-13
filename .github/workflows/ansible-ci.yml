@@ -31,6 +31,3 @@ jobs:
             ansible-lint~=5.0
       - name: yamllint
         uses: karancode/yamllint-github-action@v2.0.0
-        with:
-          yamllint_config_filepath: icinga2_web/.testenv/yamllint.yml
-          yamllint_file_or_dir: icinga2_web
