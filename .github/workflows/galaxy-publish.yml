@@ -1,13 +1,13 @@
 ---
-name: Publish on Ansible Galaxy
+name: Release to Ansible Galaxy
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
