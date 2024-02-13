@@ -92,24 +92,24 @@ icinga2_web_managed_config_files:
   - groups.ini
 
 icinga2_web_modules: []
- #- name: graphite
- #  url: 'https://github.com/icinga/icingaweb2-module-graphite.git'
- #  version: master
- #- name: ipl
- #  url: 'https://github.com/icinga/icingaweb2-module-ipl.git'
- #  version: v0.5.0
- #- name: incubator
- #  url: 'https://github.com/icinga/icingaweb2-module-incubator.git'
- #  version: v0.5.0
- #- name: reactbundle
- #  url: 'https://github.com/icinga/icingaweb2-module-reactbundle.git'
- #  version: v0.7.0
- #- name: director
- #  url: 'https://github.com/icinga/icingaweb2-module-director.git'
- #  version: v1.7.2
- #- name: audit
- #  url: 'https://github.com/adfinis/icingaweb2-module-audit.git'
- #  version: master
+#  - name: graphite
+#    url: 'https://github.com/icinga/icingaweb2-module-graphite.git'
+#    version: master
+#  - name: ipl
+#    url: 'https://github.com/icinga/icingaweb2-module-ipl.git'
+#    version: v0.5.0
+#  - name: incubator
+#    url: 'https://github.com/icinga/icingaweb2-module-incubator.git'
+#    version: v0.5.0
+#  - name: reactbundle
+#    url: 'https://github.com/icinga/icingaweb2-module-reactbundle.git'
+#    version: v0.7.0
+#  - name: director
+#    url: 'https://github.com/icinga/icingaweb2-module-director.git'
+#    version: v1.7.2
+#  - name: audit
+#    url: 'https://github.com/adfinis/icingaweb2-module-audit.git'
+#    version: master
 
 # Icingaweb2 LDAP authentication
 # For further information, consult the official icingaweb2 documentation at
