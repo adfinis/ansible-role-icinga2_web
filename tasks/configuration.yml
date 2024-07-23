@@ -13,29 +13,10 @@
     selevel: s0
   loop: '{{ icinga2_web_managed_config_files }}'
 
-- name: Enable the icingaweb2 monitoring module
-  ansible.builtin.file:
-    src: /usr/share/icingaweb2/modules/monitoring
-    dest: /etc/icingaweb2/enabledModules/monitoring
-    state: link
-    mode: "0755"
-
-- name: Ensure icingaweb2 modules directory is present
-  ansible.builtin.file:
-    name: /etc/icingaweb2/modules/monitoring
-    state: directory
-    owner: root
-    group: icingaweb2
-    mode: "0755"
-    seuser: system_u
-    serole: object_r
-    setype: icingaweb2_config_t
-    selevel: s0
-
 - name: Configure icingaweb2 monitoring module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/monitoring/config.ini.j2
-    dest: /etc/icingaweb2/modules/monitoring/config.ini
+    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -46,8 +27,8 @@
 
 - name: Configure icingaweb2 monitoring module commandtransport
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/monitoring/commandtransports.ini.j2
-    dest: /etc/icingaweb2/modules/monitoring/commandtransports.ini
+    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -58,8 +39,8 @@
 
 - name: Configure icingaweb2 monitoring module backends
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/monitoring/backends.ini.j2
-    dest: /etc/icingaweb2/modules/monitoring/backends.ini
+    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -70,8 +51,8 @@
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/director/config.ini.j2
-    dest: /etc/icingaweb2/modules/director/config.ini
+    src: templates/etc/icingaweb2/enabledModules/director/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/director/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -83,8 +64,8 @@
 
 - name: Configure icingaweb2 director module api
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/director/kickstart.ini.j2
-    dest: /etc/icingaweb2/modules/director/kickstart.ini
+    src: templates/etc/icingaweb2/enabledModules/director/kickstart.ini.j2
+    dest: /etc/icingaweb2/enabledModules/director/kickstart.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -100,8 +81,8 @@
 
 - name: Configure icingaweb2 reporting module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/reporting/config.ini.j2
-    dest: /etc/icingaweb2/modules/reporting/config.ini
+    src: templates/etc/icingaweb2/enabledModules/reporting/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/reporting/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"

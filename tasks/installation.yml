@@ -71,43 +71,10 @@
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: Ensure icingaweb2 modules directory is present
-  ansible.builtin.file:
-    name: /etc/icingaweb2/enabledModules
-    state: directory
-    owner: root
-    group: icingaweb2
-    mode: "0755"
-
-- name: Ensure icingaweb2 modules directory is present and set selinux
-  ansible.builtin.file:
-    name: /etc/icingaweb2/enabledModules
-    state: directory
-    owner: root
-    group: icingaweb2
-    mode: "0755"
-    seuser: system_u
-    serole: object_r
-    setype: icingaweb2_config_t
-    selevel: s0
-  notify: Icinga2_web reload icinga2
-
-- name: Install modules from github
-  ansible.builtin.git:
-    repo: '{{ item.url }}'
-    dest: '/etc/icingaweb2/modules/{{ item.name }}'
-    version: '{{ item.version }}'
-  loop: '{{ icinga2_web_modules }}'
-  notify: Icinga2_web reload icinga2
-
-- name: Enable modules from github
-  ansible.builtin.file:
-    src: '/etc/icingaweb2/modules/{{ item.name }}'
-    dest: '/etc/icingaweb2/enabledModules/{{ item.name }}'
-    state: link
-    mode: "0755"
-  loop: '{{ icinga2_web_modules }}'
-  notify: Icinga2_web reload icinga2
+- name: install icingaweb2 modules
+  ansible.builtin.package:
+    name: '{{ icinga2_web_modules }}'
+    state: present
 
 - name: Create icingaweb2 director user for background daemon
   ansible.builtin.user:
@@ -133,7 +100,7 @@
 
 - name: Install systemd service for icingaweb2 director daemon
   ansible.builtin.copy:
-    src: /etc/icingaweb2/modules/director/contrib/systemd/icinga-director.service
+    src: /usr/share/icingaweb2/modules/director/contrib/systemd/icinga-director.service
     remote_src: true
     dest: /etc/systemd/system
     mode: "0644"
@@ -158,13 +125,41 @@
     gpgkey: https://packages.grafana.com/gpg.key
     sslverify: true
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
-  when: icinga2_web_grafana.enabled
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_distribution == 'RedHat'
 
 - name: Install grafana
   ansible.builtin.yum:
     name: grafana
     state: present
-  when: icinga2_web_grafana.enabled
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_distribution == 'RedHat'
+
+- name: Add grafana apt key
+  ansible.builtin.apt_key:
+    id: 963FA27710458545
+    url: https://apt.grafana.com/gpg.key
+    state: present
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_distribution == 'Debian'
+
+- name: Add grafana repository
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.grafana.com stable main
+    state: present
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_distribution == 'Debian'
+
+- name: Install grafana
+  ansible.builtin.apt:
+    name: grafana
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_distribution == 'Debian'
 
 - name: Enable and start grafana service
   ansible.builtin.systemd_service:
