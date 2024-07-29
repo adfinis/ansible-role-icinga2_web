@@ -13,41 +13,81 @@
     selevel: s0
   loop: '{{ icinga2_web_managed_config_files }}'
 
-- name: Configure icingaweb2 monitoring module
-  ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
+- name: Create a symbolic link for module director
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/director
+    dest: /etc/icingaweb2/modules/director
     owner: root
     group: icingaweb2
-    mode: "0660"
-    seuser: system_u
-    serole: object_r
-    setype: icingaweb2_config_t
-    selevel: s0
+    state: link
 
-- name: Configure icingaweb2 monitoring module commandtransport
-  ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
+- name: Create a symbolic link for module graphite
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/graphite
+    dest: /etc/icingaweb2/modules/graphite
     owner: root
     group: icingaweb2
-    mode: "0660"
-    seuser: system_u
-    serole: object_r
-    setype: icingaweb2_config_t
-    selevel: s0
+    state: link
 
-- name: Configure icingaweb2 monitoring module backends
-  ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
+- name: Create a symbolic link for module incubator
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/incubator
+    dest: /etc/icingaweb2/modules/incubator
     owner: root
     group: icingaweb2
-    mode: "0660"
-    seuser: system_u
-    serole: object_r
-    setype: icingaweb2_config_t
-    selevel: s0
+    state: link
+
+- name: Create a symbolic link for module pdfexport
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/pdfexport
+    dest: /etc/icingaweb2/modules/pdfexport
+    owner: root
+    group: icingaweb2
+    state: link
+
+- name: Create a symbolic link for module reporting 
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/reporting
+    dest: /etc/icingaweb2/modules/reporting
+    owner: root
+    group: icingaweb2
+    state: link
+
+#- name: Configure icingaweb2 monitoring module
+#  ansible.builtin.template:
+#    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
+#    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
+#    owner: root
+#    group: icingaweb2
+#    mode: "0660"
+#    seuser: system_u
+#    serole: object_r
+#    setype: icingaweb2_config_t
+#    selevel: s0
+
+#- name: Configure icingaweb2 monitoring module commandtransport
+#  ansible.builtin.template:
+#    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
+#    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
+#    owner: root
+#    group: icingaweb2
+#    mode: "0660"
+#    seuser: system_u
+#    serole: object_r
+#    setype: icingaweb2_config_t
+#    selevel: s0
+#
+#- name: Configure icingaweb2 monitoring module backends
+#  ansible.builtin.template:
+#    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
+#    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
+#    owner: root
+#    group: icingaweb2
+#    mode: "0660"
+#    seuser: system_u
+#    serole: object_r
+#    setype: icingaweb2_config_t
+#    selevel: s0
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:
