@@ -37,15 +37,7 @@
     group: icingaweb2
     state: link
 
-- name: Create a symbolic link for module pdfexport
-  ansible.builtin.file:
-    src: /usr/share/icingaweb2/modules/pdfexport
-    dest: /etc/icingaweb2/modules/pdfexport
-    owner: root
-    group: icingaweb2
-    state: link
-
-- name: Create a symbolic link for module reporting 
+- name: Create a symbolic link for module reporting
   ansible.builtin.file:
     src: /usr/share/icingaweb2/modules/reporting
     dest: /etc/icingaweb2/modules/reporting
