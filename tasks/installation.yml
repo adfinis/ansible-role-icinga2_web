@@ -9,7 +9,7 @@
   ansible.builtin.package:
     name: '{{ icinga2_web_icingadb_packages }}'
     state: present
-  when: icinga2_web_use_icingadb = true
+  when: icinga2_web_use_icingadb == true
 
 - name: Install fail2ban using role
   ansible.builtin.include_role:
