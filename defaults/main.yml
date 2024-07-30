@@ -27,6 +27,9 @@ icinga2_web_director_api_user: director
 # icinga2 director API password
 icinga2_web_director_api_pass: 'passw0rd'
 
+#icingadb instead of ido
+icinga2_web_use_icingadb: false
+
 ## icingaweb2 database settings
 # The icingaweb2 database name
 icinga2_web_icingaweb2_database_name: icingaweb2
@@ -51,7 +54,6 @@ icinga2_web_icingaweb2_database_ssl: 0
 
 # icingaweb2 database ssl ca path
 icinga2_web_icingaweb2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
-
 
 # A root user on the db host with permissions to
 # add the user specified above (icinga2_web_icingaweb2_database_user)

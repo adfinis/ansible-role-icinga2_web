@@ -53,41 +53,87 @@
     group: icingaweb2
     state: link
 
-#- name: Configure icingaweb2 monitoring module
-#  ansible.builtin.template:
-#    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
-#    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
-#    owner: root
-#    group: icingaweb2
-#    mode: "0660"
-#    seuser: system_u
-#    serole: object_r
-#    setype: icingaweb2_config_t
-#    selevel: s0
+- name: enable icingadb module
+  ansible.builtin.command: icingacli module enable icingadb
+  when: icinga2_web_use_icingadb = true
 
-#- name: Configure icingaweb2 monitoring module commandtransport
-#  ansible.builtin.template:
-#    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
-#    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
-#    owner: root
-#    group: icingaweb2
-#    mode: "0660"
-#    seuser: system_u
-#    serole: object_r
-#    setype: icingaweb2_config_t
-#    selevel: s0
-#
-#- name: Configure icingaweb2 monitoring module backends
-#  ansible.builtin.template:
-#    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
-#    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
-#    owner: root
-#    group: icingaweb2
-#    mode: "0660"
-#    seuser: system_u
-#    serole: object_r
-#    setype: icingaweb2_config_t
-#    selevel: s0
+- name: Configure icingaweb2 icingadb module - config.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/config.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/config.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = true
+
+- name: Configure icingaweb2 icingadb module - redis.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/redis.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/redis.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = true
+
+- name: Configure icingaweb2 icingadb module - commandtransports.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/commandtransports.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/config.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = true
+
+- name: Configure icingaweb2 monitoring module
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
+    owner: root
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = false
+
+- name: Configure icingaweb2 monitoring module commandtransport
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
+    owner: root
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = false
+
+- name: Configure icingaweb2 monitoring module backends
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
+    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
+    owner: root
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb = false
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:

@@ -5,6 +5,12 @@
     name: '{{ icinga2_web_packages }}'
     state: present
 
+- name: Install icingaDB web packages
+  ansible.builtin.package:
+    name: '{{ icinga2_web_icingadb_packages }}'
+    state: present
+    when icinga2_web_use_icingadb: true
+
 - name: Install fail2ban using role
   ansible.builtin.include_role:
     name: robertdebock.fail2ban
