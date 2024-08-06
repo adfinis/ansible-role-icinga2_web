@@ -16,5 +16,8 @@ icinga2_web_packages:
 icinga2_web_icingadb_packages:
   - icingadb-web
 
+icinga2_web_monitoring_packages:
+  - icingaweb2-module-monitoring
+
 # path to ca store
 icinga2_web_ca_path: "/etc/ssl/certs/ca-certificates.crt"

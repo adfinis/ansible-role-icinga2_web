@@ -47,7 +47,7 @@
 
 - name: enable icingadb module
   ansible.builtin.command: icingacli module enable icingadb
-  when: icinga2_web_use_icingadb = true
+  when: icinga2_web_use_icingadb == true
 
 - name: Configure icingaweb2 icingadb module - config.ini
   ansible.builtin.template:
@@ -60,7 +60,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = true
+  when: icinga2_web_use_icingadb == true
 
 - name: Configure icingaweb2 icingadb module - redis.ini
   ansible.builtin.template:
@@ -73,7 +73,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = true
+  when: icinga2_web_use_icingadb == true
 
 - name: Configure icingaweb2 icingadb module - commandtransports.ini
   ansible.builtin.template:
@@ -86,12 +86,18 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = true
+  when: icinga2_web_use_icingadb == true
+
+- name: Create config directory for icingaweb2 module monitoring
+  ansible.builtin.file:
+    path: /etc/icingaweb2/modules/monitoring/
+    state: directory
+    mode: '0755'
 
 - name: Configure icingaweb2 monitoring module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/config.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/config.ini
+    src: templates/etc/icingaweb2/modules/monitoring/config.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -99,12 +105,12 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = false
+  when: icinga2_web_use_icingadb == false
 
 - name: Configure icingaweb2 monitoring module commandtransport
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/commandtransports.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/commandtransports.ini
+    src: templates/etc/icingaweb2/modules/monitoring/commandtransports.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/commandtransports.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -112,12 +118,12 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = false
+  when: icinga2_web_use_icingadb == false
 
 - name: Configure icingaweb2 monitoring module backends
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/enabledModules/monitoring/backends.ini.j2
-    dest: /etc/icingaweb2/enabledModules/monitoring/backends.ini
+    src: templates/etc/icingaweb2/modules/monitoring/backends.ini.j2
+    dest: /etc/icingaweb2/modules/monitoring/backends.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -125,7 +131,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb = false
+  when: icinga2_web_use_icingadb == false
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:
@@ -177,7 +183,7 @@
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: Insert icingaweb2 admin password into database  # noqa no-changed-when
+- name: Insert icingaweb2 admin password into database # noqa no-changed-when
   ansible.builtin.command: >
     mysql
     -h'{{ icinga2_web_icingaweb2_database_host }}'
@@ -189,8 +195,8 @@
     ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
   when:
     - not ansible_check_mode
-    - icinga2_web_register_icingaweb2_imported.rc == 1
     - icinga2_web_register_admin_hash
+    - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: Configure grafana
   ansible.builtin.template:

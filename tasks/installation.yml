@@ -31,47 +31,39 @@
     persistent: true
   when: ansible_distribution == 'RedHat'
 
-- name: Check if icingaweb2 table and user in mysql exist
+- name: Check if icingaweb2 table and user in mysql exist (this might fail but thats expected)
   ansible.builtin.shell: >
     set -o pipefail;
     mysql
-    --user={{ icinga2_web_database_root_user }}
-    --password={{ icinga2_web_database_root_pass }}
+    --user={{ icinga2_web_database_user }}
+    --password={{ vault_icinga2_web_icingaweb2_database_pass }}
     --host={{ icinga2_web_icingaweb2_database_host }}
     --ssl-ca={{ icinga2_web_ca_path }}
     {{ icinga2_web_icingaweb2_database_name }}
-    -e "SHOW TABLES;" | grep "icingaweb_user"
+    -e "SHOW TABLES;" | grep icingaweb_user
+  args:
+    executable: /bin/bash
   register: icinga2_web_register_icingaweb2_imported
   changed_when: icinga2_web_register_icingaweb2_imported.rc == 1
-  failed_when: "'Access denied for' in icinga2_web_register_icingaweb2_imported.stderr"
+  ignore_errors: true
 
-- name: Import icingaweb2 database schema using the root user
+- name: Print return information from the previous task
+  ansible.builtin.debug:
+    var: icinga2_web_register_icingaweb2_imported.rc
+    verbosity: 2
+
+
+
+- name: Import icingaweb2 database schema
   community.mysql.mysql_db:
     name: '{{ icinga2_web_icingaweb2_database_name }}'
     login_host: '{{ icinga2_web_icingaweb2_database_host }}'
     login_port: '{{ icinga2_web_icingaweb2_database_port }}'
-    login_user: '{{ icinga2_web_database_root_user }}'
-    login_password: '{{ icinga2_web_database_root_pass }}'
+    login_user: '{{ icinga2_web_database_user }}'
+    login_password: '{{ vault_icinga2_web_icingaweb2_database_pass }}'
     ssl_ca: '{{ icinga2_web_ca_path }}'
     state: import
     target: '{{ icinga2_web_mysql_schema_sql_path }}'
-  run_once: true
-  when:
-    - not ansible_check_mode
-    - icinga2_web_register_icingaweb2_imported.rc == 1
-
-- name: Create a user with access only to the icingaweb2 database using the root user
-  community.mysql.mysql_user:
-    name: '{{ icinga2_web_icingaweb2_database_user.split("@")[0] }}'
-    password: '{{ icinga2_web_icingaweb2_database_pass }}'
-    priv: '{{ icinga2_web_icingaweb2_database_name }}.*:ALL'
-    host: '{{ icinga2_web_icingaweb2_database_hostpattern }}'
-    login_host: '{{ icinga2_web_icingaweb2_database_host }}'
-    login_port: '{{ icinga2_web_icingaweb2_database_port }}'
-    login_user: '{{ icinga2_web_database_root_user }}'
-    login_password: '{{ icinga2_web_database_root_pass }}'
-    ssl_ca: '{{ icinga2_web_ca_path }}'
-    state: present
   run_once: true
   when:
     - not ansible_check_mode

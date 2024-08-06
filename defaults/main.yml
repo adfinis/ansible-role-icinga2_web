@@ -57,7 +57,7 @@ icinga2_web_icingaweb2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
 
 # A root user on the db host with permissions to
 # add the user specified above (icinga2_web_icingaweb2_database_user)
-icinga2_web_database_root_user: root
+icinga2_web_database_user: icingaweb2
 
 # corresponding password to the root user
 icinga2_web_database_root_pass: 'passw0rd'
