@@ -234,6 +234,22 @@ icinga2_web_director: []
 
 icinga2_web_reporting: []
 
+# IcingaDB resources configuration
+
+# icinga2_web_icingadb:
+#   - name: 'icingadb_db'
+#     db: 'mysql'
+#     host: 'db.example.com'
+#     port: '3306'
+#     dbname: 'icingadb'
+#     username: 'icingadb@example.com'
+#     password: '3xample'
+#     charset: 'utf8mb4'
+#     use_ssl: '1'
+#     ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
+
+icinga2_web_icingadb: []
+
 # Grafana configuration
 # icinga2_web_grafana:
 #   enabled: false

@@ -52,8 +52,6 @@
     var: icinga2_web_register_icingaweb2_imported.rc
     verbosity: 2
 
-
-
 - name: Import icingaweb2 database schema
   community.mysql.mysql_db:
     name: '{{ icinga2_web_icingaweb2_database_name }}'

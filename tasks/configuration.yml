@@ -49,6 +49,14 @@
   ansible.builtin.command: icingacli module enable icingadb
   when: icinga2_web_use_icingadb == true
 
+- name: Create a symbolic link for module icingadb
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/icingadb
+    dest: /etc/icingaweb2/modules/icingadb
+    owner: root
+    group: icingaweb2
+    state: link
+
 - name: Configure icingaweb2 icingadb module - config.ini
   ansible.builtin.template:
     src: templates/etc/icingaweb2/modules/icingadb/config.ini.j2
@@ -78,7 +86,7 @@
 - name: Configure icingaweb2 icingadb module - commandtransports.ini
   ansible.builtin.template:
     src: templates/etc/icingaweb2/modules/icingadb/commandtransports.ini.j2
-    dest: /etc/icingaweb2/modules/icingadb/config.ini
+    dest: /etc/icingaweb2/modules/icingadb/commandtransports.ini
     owner: www-data
     group: icingaweb2
     mode: "0660"
@@ -162,6 +170,27 @@
 - name: Configure icingaweb2 director database  # noqa no-changed-when
   ansible.builtin.command: icingacli director migration run
   when: icinga2_web_director | length != 0
+
+- name: Check if director kickstart needs to be performed   # noqa no-changed-when
+  ansible.builtin.command: icingacli director kickstart required
+  when: icinga2_web_director | length != 0
+  run_once: true
+  register: icinga2_web_register_kickstart
+  #ignore_errors: true
+  failed_when: icinga2_web_register_kickstart.stdout != "Kickstart configured, execution is not required"
+
+- name: print kickstart return-code
+  ansible.builtin.debug:
+    var: icinga2_web_register_kickstart
+    verbosity: 2
+
+- name: run icingaweb2 director kickstart  # noqa no-changed-when
+  ansible.builtin.command: icingacli director kickstart run
+  when:
+    - icinga2_web_director | length != 0
+    - icinga2_web_register_kickstart.rc == 0
+  run_once: true
+  check_mode: false
 
 - name: Configure icingaweb2 reporting module
   ansible.builtin.template:
