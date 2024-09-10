@@ -171,20 +171,20 @@
   ansible.builtin.command: icingacli director migration run
   when: icinga2_web_director | length != 0
 
-- name: Check if director kickstart needs to be performed   # noqa no-changed-when
+- name: Check if director kickstart is done yet (allowed to fail)   # noqa no-changed-when
   ansible.builtin.command: icingacli director kickstart required
   when: icinga2_web_director | length != 0
   run_once: true
   register: icinga2_web_register_kickstart
-  #ignore_errors: true
-  failed_when: icinga2_web_register_kickstart.stdout != "Kickstart configured, execution is not required"
+  ignore_errors: true
+  failed_when: icinga2_web_register_kickstart.rc == 0
 
-- name: print kickstart return-code
+- name: Print kickstart return-code
   ansible.builtin.debug:
     var: icinga2_web_register_kickstart
     verbosity: 2
 
-- name: run icingaweb2 director kickstart  # noqa no-changed-when
+- name: Run icingaweb2 director kickstart  # noqa no-changed-when
   ansible.builtin.command: icingacli director kickstart run
   when:
     - icinga2_web_director | length != 0
