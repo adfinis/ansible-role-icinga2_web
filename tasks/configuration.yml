@@ -55,7 +55,7 @@
   ansible.builtin.command: icingacli module enable icingadb
   when:
     - icinga2_web_use_icingadb
-    - "'enabled' not in icingadb_module_enabled.stdout"
+    - "'icingadb' not in icingadb_module_enabled.stdout"
 
 - name: Create a symbolic link for module icingadb
   ansible.builtin.file:
