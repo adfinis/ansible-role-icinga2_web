@@ -45,9 +45,17 @@
     group: icingaweb2
     state: link
 
-- name: enable icingadb module
+- name: Check if icingadb module is enabled
+  ansible.builtin.command: icingacli module list
+  register: icingadb_module_enabled
+  failed_when: false
+  changed_when: false
+
+- name: Enable icingadb module  # noqa changed-when
   ansible.builtin.command: icingacli module enable icingadb
-  when: icinga2_web_use_icingadb == true
+  when:
+    - icinga2_web_use_icingadb
+    - "'enabled' not in icingadb_module_enabled.stdout"
 
 - name: Create a symbolic link for module icingadb
   ansible.builtin.file:
@@ -167,17 +175,25 @@
     selevel: s0
   when: icinga2_web_director | length != 0
 
+- name: Check for pending director migrations
+  ansible.builtin.command: icingactl director migrations pending
+  changed_when: false
+  failed_when: false
+  register: director_pending_migrations
+
 - name: Configure icingaweb2 director database  # noqa no-changed-when
   ansible.builtin.command: icingacli director migration run
-  when: icinga2_web_director | length != 0
+  when:
+    - icinga2_web_director | length != 0
+    - director_pending_migrations.rc == 0
 
-- name: Check if director kickstart is done yet (allowed to fail)   # noqa no-changed-when
+- name: Check if director kickstart is done yet   # noqa no-changed-when
   ansible.builtin.command: icingacli director kickstart required
   when: icinga2_web_director | length != 0
   run_once: true
   register: icinga2_web_register_kickstart
-  ignore_errors: true
-  failed_when: icinga2_web_register_kickstart.rc == 0
+  failed_when: false
+  changed_when: false
 
 - name: Print kickstart return-code
   ansible.builtin.debug:
