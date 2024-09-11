@@ -1,7 +1,7 @@
 ---
 
 # The icingaweb2 web ui password
-icinga2_web_admin_pass: 'passw0rd'
+icinga2_web_admin_pass: passw0rd
 
 # icinga2 API host
 icinga2_web_api_host: 127.0.0.1
@@ -13,7 +13,7 @@ icinga2_web_api_port: 5665
 icinga2_web_api_user: icingaweb2
 
 # icinga2 API password
-icinga2_web_api_pass: 'passw0rd'
+icinga2_web_api_pass: passw0rd
 
 # icinga2 director API host
 icinga2_web_director_api_host: 127.0.0.1
@@ -25,9 +25,9 @@ icinga2_web_director_api_port: 5665
 icinga2_web_director_api_user: director
 
 # icinga2 director API password
-icinga2_web_director_api_pass: 'passw0rd'
+icinga2_web_director_api_pass: passw0rd
 
-#icingadb instead of ido
+# icingadb instead of ido
 icinga2_web_use_icingadb: false
 
 ## icingaweb2 database settings
@@ -38,7 +38,7 @@ icinga2_web_icingaweb2_database_name: icingaweb2
 icinga2_web_icingaweb2_database_user: icingaweb2
 
 # The icingaweb2 database password
-icinga2_web_icingaweb2_database_pass: 'passw0rd'
+icinga2_web_icingaweb2_database_pass: passw0rd
 
 # The icingaweb2 database host
 icinga2_web_icingaweb2_database_host: 127.0.0.1
@@ -47,7 +47,7 @@ icinga2_web_icingaweb2_database_host: 127.0.0.1
 icinga2_web_icingaweb2_database_port: 3306
 
 # the hostpattern which can access and login with the icingaweb2 user
-icinga2_web_icingaweb2_database_hostpattern: 'localhost'
+icinga2_web_icingaweb2_database_hostpattern: localhost
 
 # icingaweb2 database ssl connection (1 or 0)
 icinga2_web_icingaweb2_database_ssl: 0
@@ -60,8 +60,7 @@ icinga2_web_icingaweb2_database_ssl_ca: /etc/pki/tls/certs/ca-bundle.crt
 icinga2_web_database_user: icingaweb2
 
 # corresponding password to the root user
-icinga2_web_database_root_pass: 'passw0rd'
-
+icinga2_web_database_root_pass: passw0rd
 
 ## Icinga2 database settings
 # icinga2 database name
@@ -77,7 +76,7 @@ icinga2_web_icinga2_database_port: 3306
 icinga2_web_icinga2_database_user: icinga2
 
 # icinga2 database password
-icinga2_web_icinga2_database_pass: 'passw0rd'
+icinga2_web_icinga2_database_pass: passw0rd
 
 # icinga2 database ssl connection (1 or 0)
 icinga2_web_icinga2_database_ssl: 0
@@ -128,7 +127,6 @@ icinga2_web_modules: []
 #     timeout: 5
 
 icinga2_web_ldap: []
-
 # Icingaweb2 LDAP User configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap
@@ -142,7 +140,6 @@ icinga2_web_ldap: []
 #     filter: "(somefilter)" # optional
 
 icinga2_web_ldap_userconf: []
-
 # Icingaweb2 LDAP Group configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/05-Authentication/#ldap-groups
@@ -159,7 +156,6 @@ icinga2_web_ldap_userconf: []
 #     group_filter: '(somefilter)' # optional
 
 icinga2_web_ldap_groupconf: []
-
 # Icingaweb2 database group configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icinga-web-2/latest/doc/05-Authentication/#database-groups
@@ -170,7 +166,6 @@ icinga2_web_ldap_groupconf: []
 #     resource: icingaweb_db
 
 icinga2_web_database_groupconf: []
-
 # Icinga2 Permissions configuration
 # For further information, consult the official icingaweb2 documentation at
 # https://icinga.com/docs/icingaweb2/latest/doc/06-Security/#configuration
@@ -198,7 +193,7 @@ icinga2_web_permissions:
     groups:
       - Administrators
     permissions:
-      - '*'
+      - "*"
 
 # Director Resources configuration
 # For further information, consult the official icingaweb2 documentation at
@@ -217,7 +212,6 @@ icinga2_web_permissions:
 #     ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_director: []
-
 # Reporting resources configuration
 
 # icinga2_web_reporting:
@@ -233,7 +227,6 @@ icinga2_web_director: []
 #     ssl_ca: '/etc/pki/tls/certs/ca-bundle.crt'
 
 icinga2_web_reporting: []
-
 # IcingaDB resources configuration
 
 # icinga2_web_icingadb:

@@ -1,9 +1,8 @@
 ---
-
 - name: Configure icingaweb2
   ansible.builtin.template:
-    src: 'templates/etc/icingaweb2/{{ item }}.j2'
-    dest: '/etc/icingaweb2/{{ item }}'
+    src: templates/etc/icingaweb2/{{ item }}.j2
+    dest: /etc/icingaweb2/{{ item }}
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -11,7 +10,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  loop: '{{ icinga2_web_managed_config_files }}'
+  loop: "{{ icinga2_web_managed_config_files }}"
 
 - name: Create a symbolic link for module director
   ansible.builtin.file:
@@ -51,7 +50,7 @@
   failed_when: false
   changed_when: false
 
-- name: Enable icingadb module  # noqa changed-when
+- name: Enable icingadb module # noqa no-changed-when
   ansible.builtin.command: icingacli module enable icingadb
   when:
     - icinga2_web_use_icingadb
@@ -76,7 +75,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == true
+  when: icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 icingadb module - redis.ini
   ansible.builtin.template:
@@ -89,7 +88,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == true
+  when: icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 icingadb module - commandtransports.ini
   ansible.builtin.template:
@@ -102,13 +101,13 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == true
+  when: icinga2_web_use_icingadb
 
 - name: Create config directory for icingaweb2 module monitoring
   ansible.builtin.file:
     path: /etc/icingaweb2/modules/monitoring/
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Configure icingaweb2 monitoring module
   ansible.builtin.template:
@@ -121,7 +120,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == false
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 monitoring module commandtransport
   ansible.builtin.template:
@@ -134,7 +133,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == false
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 monitoring module backends
   ansible.builtin.template:
@@ -147,7 +146,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  when: icinga2_web_use_icingadb == false
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:
@@ -181,13 +180,13 @@
   failed_when: false
   register: director_pending_migrations
 
-- name: Configure icingaweb2 director database  # noqa no-changed-when
+- name: Configure icingaweb2 director database # noqa no-changed-when
   ansible.builtin.command: icingacli director migration run
   when:
     - icinga2_web_director | length != 0
     - director_pending_migrations.rc == 0
 
-- name: Check if director kickstart is done yet   # noqa no-changed-when
+- name: Check if director kickstart is done yet # noqa no-changed-when
   ansible.builtin.command: icingacli director kickstart required
   when: icinga2_web_director | length != 0
   run_once: true
@@ -200,7 +199,7 @@
     var: icinga2_web_register_kickstart
     verbosity: 2
 
-- name: Run icingaweb2 director kickstart  # noqa no-changed-when
+- name: Run icingaweb2 director kickstart # noqa no-changed-when
   ansible.builtin.command: icingacli director kickstart run
   when:
     - icinga2_web_director | length != 0
@@ -221,7 +220,7 @@
     selevel: s0
   when: icinga2_web_reporting | length != 0
 
-- name: Create icingaweb2 admin password hash  # noqa no-changed-when
+- name: Create icingaweb2 admin password hash # noqa no-changed-when
   ansible.builtin.command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
   when:

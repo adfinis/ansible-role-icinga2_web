@@ -1,15 +1,14 @@
 ---
-
 - name: Install icinga2 web packages
   ansible.builtin.package:
-    name: '{{ icinga2_web_packages }}'
+    name: "{{ icinga2_web_packages }}"
     state: present
 
 - name: Install icingaDB web packages
   ansible.builtin.package:
-    name: '{{ icinga2_web_icingadb_packages }}'
+    name: "{{ icinga2_web_icingadb_packages }}"
     state: present
-  when: icinga2_web_use_icingadb == true
+  when: icinga2_web_use_icingadb
 
 - name: Install fail2ban using role
   ansible.builtin.include_role:
@@ -54,30 +53,30 @@
 
 - name: Import icingaweb2 database schema
   community.mysql.mysql_db:
-    name: '{{ icinga2_web_icingaweb2_database_name }}'
-    login_host: '{{ icinga2_web_icingaweb2_database_host }}'
-    login_port: '{{ icinga2_web_icingaweb2_database_port }}'
-    login_user: '{{ icinga2_web_database_user }}'
-    login_password: '{{ vault_icinga2_web_icingaweb2_database_pass }}'
-    ssl_ca: '{{ icinga2_web_ca_path }}'
+    name: "{{ icinga2_web_icingaweb2_database_name }}"
+    login_host: "{{ icinga2_web_icingaweb2_database_host }}"
+    login_port: "{{ icinga2_web_icingaweb2_database_port }}"
+    login_user: "{{ icinga2_web_database_user }}"
+    login_password: "{{ vault_icinga2_web_icingaweb2_database_pass }}"
+    ssl_ca: "{{ icinga2_web_ca_path }}"
     state: import
-    target: '{{ icinga2_web_mysql_schema_sql_path }}'
+    target: "{{ icinga2_web_mysql_schema_sql_path }}"
   run_once: true
   when:
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: install icingaweb2 modules
+- name: Install icingaweb2 modules
   ansible.builtin.package:
-    name: '{{ icinga2_web_modules }}'
+    name: "{{ icinga2_web_modules }}"
     state: present
 
 - name: Create icingaweb2 director user for background daemon
   ansible.builtin.user:
     name: icingadirector
     group: icingaweb2
-    shell: '/bin/false'
-    home: '/var/lib/icingadirector'
+    shell: /bin/false
+    home: /var/lib/icingadirector
     system: true
   when: icinga2_web_director | length != 0
 
@@ -126,7 +125,7 @@
     - ansible_distribution == 'RedHat'
 
 - name: Install grafana
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: grafana
     state: present
   when:
