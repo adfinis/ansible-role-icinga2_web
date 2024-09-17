@@ -175,7 +175,7 @@
   when: icinga2_web_director | length != 0
 
 - name: Check for pending director migrations
-  ansible.builtin.command: icingactl director migrations pending
+  ansible.builtin.command: icingacli director migration pending
   changed_when: false
   failed_when: false
   register: director_pending_migrations
