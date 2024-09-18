@@ -20,6 +20,12 @@
     group: icingaweb2
     state: link
 
+- name: Ensure Icingaweb can write graphite config
+  ansible.bultin.file:
+    path: /usr/share/icingaweb2/modules/graphite
+    state: directory
+    mode: '0775'
+
 - name: Create a symbolic link for module graphite
   ansible.builtin.file:
     src: /usr/share/icingaweb2/modules/graphite
