@@ -21,7 +21,7 @@
     state: link
 
 - name: Ensure Icingaweb can write graphite config
-  ansible.bultin.file:
+  ansible.builtin.file:
     path: /usr/share/icingaweb2/modules/graphite
     state: directory
     mode: '0775'
