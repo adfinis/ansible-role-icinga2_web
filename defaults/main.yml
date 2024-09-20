@@ -261,3 +261,5 @@ icinga2_web_icingadb: []
 #       token_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/token
 #       api_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/userinfo
 #       role_attribute_path: contains(groups[*], '/admin') && 'Admin'
+icinga2_web_graphite_url: ''
+icinga2_web_graphite_insecure: 0

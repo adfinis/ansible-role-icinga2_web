@@ -34,6 +34,15 @@
     group: icingaweb2
     state: link
 
+- name: Configure icingaweb2 graphite module
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/enabledModules/graphite/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/graphite/config.ini
+    owner: root
+    group: icingaweb2
+    mode: "0660"
+  when: icinga2_web_graphite_url | length != 0
+
 - name: Create a symbolic link for module incubator
   ansible.builtin.file:
     src: /usr/share/icingaweb2/modules/incubator
