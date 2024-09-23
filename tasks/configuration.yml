@@ -293,7 +293,7 @@
 - name: Copy grafana dashboard config
   ansible.builtin.template:
     src: etc/grafana/provisioning/dashboards/dashboards.yaml.j2
-    dest: etc/grafana/provisioning/dashboards/dashboards.yaml
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
     mode: '0644'
   notify: Icinga2_web restart grafana-server
   when:
@@ -303,7 +303,7 @@
 - name: Copy grafana datasource config
   ansible.builtin.template:
     src: etc/grafana/provisioning/datasources/datasources.yaml.j2
-    dest: etc/grafana/provisioning/datasources/datasources.yaml
+    dest: /etc/grafana/provisioning/datasources/datasources.yaml
     mode: '0644'
   notify: Icinga2_web restart grafana-server
   when:
