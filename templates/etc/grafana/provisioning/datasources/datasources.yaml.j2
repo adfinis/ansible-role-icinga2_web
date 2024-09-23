@@ -2,5 +2,5 @@ apiVersion: 1
 
 datasources:
 {% for datasource in icinga2_web_grafana_datasources %}
-    - {{ datasource | to_nice_yaml(indent=2) | indent(2) }}
+    - {{ datasource | to_nice_yaml(indent=2) | indent(4) }}
 {% endfor %}
