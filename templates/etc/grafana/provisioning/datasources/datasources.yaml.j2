@@ -1,0 +1,4 @@
+apiVersion: 1
+
+datasources:
+  {{ icinga2_web_grafana_datasources | to_nice_yaml(indent=2) }}

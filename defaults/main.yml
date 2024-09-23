@@ -261,5 +261,22 @@ icinga2_web_icingadb: []
 #       token_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/token
 #       api_url: https://sso.example.com/auth/realms/example/protocol/openid-connect/userinfo
 #       role_attribute_path: contains(groups[*], '/admin') && 'Admin'
+
+icinga2_web_grafana_datasources: []
+# Grafana datasources
+# icinga2_web_grafana_datasources:
+#   # <string, required> Sets the name you use to refer to
+#   # the data source in panels and queries.
+#   - name: Graphite
+#     type: graphite
+#     access: proxy
+#     orgId: 1
+#     url: http://localhost:8080
+
+icinga2_web_grafana_dashboards: []
+# Grafana dashboard JSON URLs, will be downloaded
+# icinga2_web_grafana_dashboards:
+#   - https://grafana.com/api/dashboards/56/revisions/3/download
+
 icinga2_web_graphite_url: ''
 icinga2_web_graphite_insecure: 0

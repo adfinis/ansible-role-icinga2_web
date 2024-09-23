@@ -269,3 +269,43 @@
     selevel: s0
   notify: Icinga2_web restart grafana-server
   when: icinga2_web_grafana.enabled
+
+- name: Make sure grafana dashboard folder exists
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    mode: '0644'
+    state: directory
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+
+- name: Download grafana dashboards
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item | basename }}"
+    mode: '0644'
+  loop: "{{ icinga2_web_grafana_dashboards }}"
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+- name: Copy grafana dashboard config
+  ansible.builtin.template:
+    src: etc/grafana/provisioning/dashboards/dashboards.yaml.j2
+    dest: etc/grafana/provisioning/dashboards/dashboards.yaml
+    mode: '0644'
+  notify: Icinga2_web restart grafana-server
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+- name: Copy grafana datasource config
+  ansible.builtin.template:
+    src: etc/grafana/provisioning/datasources/datasources.yaml.j2
+    dest: etc/grafana/provisioning/datasources/datasources.yaml
+    mode: '0644'
+  notify: Icinga2_web restart grafana-server
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_datasources | length != 0
