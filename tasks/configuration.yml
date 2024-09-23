@@ -283,7 +283,7 @@
 - name: Download grafana dashboards
   ansible.builtin.get_url:
     url: "{{ item }}"
-    dest: "/var/lib/grafana/dashboards/{{ item | basename }}"
+    dest: "/var/lib/grafana/dashboards/{{ item | hash('sha256') }}.json"
     mode: '0644'
   loop: "{{ icinga2_web_grafana_dashboards }}"
   when:
