@@ -270,7 +270,7 @@
 - name: Make sure grafana dashboard folder exists
   ansible.builtin.file:
     path: /var/lib/grafana/dashboards
-    mode: '0660'
+    mode: '0770'
     state: directory
     owner: grafana
     group: grafana
