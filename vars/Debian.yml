@@ -1,7 +1,7 @@
 ---
 
 # mysql.schema.sql path for debian
-icinga2_web_mysql_schema_sql_path: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
+icinga2_web_mysql_schema_sql_path: /usr/share/icingaweb2/schema/mysql.schema.sql
 
 # package list needed for icingaweb2
 icinga2_web_packages:
@@ -13,5 +13,11 @@ icinga2_web_packages:
   - mariadb-client
   - git
 
+icinga2_web_icingadb_packages:
+  - icingadb-web
+
+icinga2_web_monitoring_packages:
+  - icingaweb2-module-monitoring
+
 # path to ca store
-icinga2_web_ca_path: "/etc/ssl/certs/ca-certificates.crt"
+icinga2_web_ca_path: /etc/ssl/certs/ca-certificates.crt

@@ -1,9 +1,8 @@
 ---
-
 - name: Configure icingaweb2
   ansible.builtin.template:
-    src: 'templates/etc/icingaweb2/{{ item }}.j2'
-    dest: '/etc/icingaweb2/{{ item }}'
+    src: templates/etc/icingaweb2/{{ item }}.j2
+    dest: /etc/icingaweb2/{{ item }}
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -11,26 +10,119 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
-  loop: '{{ icinga2_web_managed_config_files }}'
+  loop: "{{ icinga2_web_managed_config_files }}"
 
-- name: Enable the icingaweb2 monitoring module
+- name: Create a symbolic link for module director
   ansible.builtin.file:
-    src: /usr/share/icingaweb2/modules/monitoring
-    dest: /etc/icingaweb2/enabledModules/monitoring
-    state: link
-    mode: "0755"
-
-- name: Ensure icingaweb2 modules directory is present
-  ansible.builtin.file:
-    name: /etc/icingaweb2/modules/monitoring
-    state: directory
+    src: /usr/share/icingaweb2/modules/director
+    dest: /etc/icingaweb2/modules/director
     owner: root
     group: icingaweb2
-    mode: "0755"
+    state: link
+
+- name: Ensure Icingaweb can write graphite config
+  ansible.builtin.file:
+    path: /usr/share/icingaweb2/modules/graphite
+    state: directory
+    mode: '0775'
+
+- name: Create a symbolic link for module graphite
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/graphite
+    dest: /etc/icingaweb2/modules/graphite
+    owner: root
+    group: icingaweb2
+    state: link
+
+- name: Configure icingaweb2 graphite module
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/enabledModules/graphite/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/graphite/config.ini
+    owner: root
+    group: icingaweb2
+    mode: "0660"
+  when: icinga2_web_graphite_url | length != 0
+
+- name: Create a symbolic link for module incubator
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/incubator
+    dest: /etc/icingaweb2/modules/incubator
+    owner: root
+    group: icingaweb2
+    state: link
+
+- name: Create a symbolic link for module reporting
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/reporting
+    dest: /etc/icingaweb2/modules/reporting
+    owner: root
+    group: icingaweb2
+    state: link
+
+- name: Check if icingadb module is enabled
+  ansible.builtin.command: icingacli module list
+  register: icingadb_module_enabled
+  failed_when: false
+  changed_when: false
+
+- name: Enable icingadb module # noqa no-changed-when
+  ansible.builtin.command: icingacli module enable icingadb
+  when:
+    - icinga2_web_use_icingadb
+    - "'icingadb' not in icingadb_module_enabled.stdout"
+
+- name: Create a symbolic link for module icingadb
+  ansible.builtin.file:
+    src: /usr/share/icingaweb2/modules/icingadb
+    dest: /etc/icingaweb2/modules/icingadb
+    owner: root
+    group: icingaweb2
+    state: link
+
+- name: Configure icingaweb2 icingadb module - config.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/config.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/config.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
     seuser: system_u
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
+  when: icinga2_web_use_icingadb
+
+- name: Configure icingaweb2 icingadb module - redis.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/redis.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/redis.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb
+
+- name: Configure icingaweb2 icingadb module - commandtransports.ini
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/modules/icingadb/commandtransports.ini.j2
+    dest: /etc/icingaweb2/modules/icingadb/commandtransports.ini
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+  when: icinga2_web_use_icingadb
+
+- name: Create config directory for icingaweb2 module monitoring
+  ansible.builtin.file:
+    path: /etc/icingaweb2/modules/monitoring/
+    state: directory
+    mode: "0755"
 
 - name: Configure icingaweb2 monitoring module
   ansible.builtin.template:
@@ -43,6 +135,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 monitoring module commandtransport
   ansible.builtin.template:
@@ -55,6 +148,7 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 monitoring module backends
   ansible.builtin.template:
@@ -67,11 +161,12 @@
     serole: object_r
     setype: icingaweb2_config_t
     selevel: s0
+  when: not icinga2_web_use_icingadb
 
 - name: Configure icingaweb2 director module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/director/config.ini.j2
-    dest: /etc/icingaweb2/modules/director/config.ini
+    src: templates/etc/icingaweb2/enabledModules/director/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/director/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -83,8 +178,8 @@
 
 - name: Configure icingaweb2 director module api
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/director/kickstart.ini.j2
-    dest: /etc/icingaweb2/modules/director/kickstart.ini
+    src: templates/etc/icingaweb2/enabledModules/director/kickstart.ini.j2
+    dest: /etc/icingaweb2/enabledModules/director/kickstart.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -94,14 +189,43 @@
     selevel: s0
   when: icinga2_web_director | length != 0
 
-- name: Configure icingaweb2 director database  # noqa no-changed-when
+- name: Check for pending director migrations
+  ansible.builtin.command: icingacli director migration pending
+  changed_when: false
+  failed_when: false
+  register: director_pending_migrations
+
+- name: Configure icingaweb2 director database # noqa no-changed-when
   ansible.builtin.command: icingacli director migration run
+  when:
+    - icinga2_web_director | length != 0
+    - director_pending_migrations.rc == 0
+
+- name: Check if director kickstart is done yet # noqa no-changed-when
+  ansible.builtin.command: icingacli director kickstart required
   when: icinga2_web_director | length != 0
+  run_once: true
+  register: icinga2_web_register_kickstart
+  failed_when: false
+  changed_when: false
+
+- name: Print kickstart return-code
+  ansible.builtin.debug:
+    var: icinga2_web_register_kickstart
+    verbosity: 2
+
+- name: Run icingaweb2 director kickstart # noqa no-changed-when
+  ansible.builtin.command: icingacli director kickstart run
+  when:
+    - icinga2_web_director | length != 0
+    - icinga2_web_register_kickstart.rc == 0
+  run_once: true
+  check_mode: false
 
 - name: Configure icingaweb2 reporting module
   ansible.builtin.template:
-    src: templates/etc/icingaweb2/modules/reporting/config.ini.j2
-    dest: /etc/icingaweb2/modules/reporting/config.ini
+    src: templates/etc/icingaweb2/enabledModules/reporting/config.ini.j2
+    dest: /etc/icingaweb2/enabledModules/reporting/config.ini
     owner: root
     group: icingaweb2
     mode: "0660"
@@ -111,14 +235,14 @@
     selevel: s0
   when: icinga2_web_reporting | length != 0
 
-- name: Create icingaweb2 admin password hash  # noqa no-changed-when
+- name: Create icingaweb2 admin password hash # noqa no-changed-when
   ansible.builtin.command: openssl passwd -1 '{{ icinga2_web_admin_pass }}'
   register: icinga2_web_register_admin_hash
   when:
     - not ansible_check_mode
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
-- name: Insert icingaweb2 admin password into database  # noqa no-changed-when
+- name: Insert icingaweb2 admin password into database # noqa no-changed-when
   ansible.builtin.command: >
     mysql
     -h'{{ icinga2_web_icingaweb2_database_host }}'
@@ -130,18 +254,63 @@
     ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
   when:
     - not ansible_check_mode
-    - icinga2_web_register_icingaweb2_imported.rc == 1
     - icinga2_web_register_admin_hash
+    - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: Configure grafana
   ansible.builtin.template:
     src: templates/etc/grafana/grafana.ini.j2
     dest: /etc/grafana/grafana.ini
-    owner: root
+    owner: grafana
     group: grafana
     mode: "0660"
-    seuser: system_u
-    serole: object_r
-    selevel: s0
   notify: Icinga2_web restart grafana-server
   when: icinga2_web_grafana.enabled
+
+- name: Make sure grafana dashboard folder exists
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    mode: '0770'
+    state: directory
+    owner: grafana
+    group: grafana
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+
+- name: Download grafana dashboards
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item | hash('sha256') }}.json"
+    mode: '0660'
+    owner: grafana
+    group: grafana
+  loop: "{{ icinga2_web_grafana_dashboards }}"
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+- name: Copy grafana dashboard config
+  ansible.builtin.template:
+    src: etc/grafana/provisioning/dashboards/dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+    mode: '0660'
+    owner: grafana
+    group: grafana
+  notify: Icinga2_web restart grafana-server
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_dashboards | length != 0
+
+- name: Copy grafana datasource config
+  ansible.builtin.template:
+    src: etc/grafana/provisioning/datasources/datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yaml
+    mode: '0660'
+    owner: grafana
+    group: grafana
+  notify: Icinga2_web restart grafana-server
+  when:
+    - icinga2_web_grafana.enabled
+    - icinga2_web_grafana_datasources | length != 0

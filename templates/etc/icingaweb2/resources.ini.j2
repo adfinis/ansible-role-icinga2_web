@@ -64,3 +64,17 @@ charset = "{{ resourceconf.charset }}"
 use_ssl = "{{ resourceconf.use_ssl }}"
 ssl_ca = "{{ resourceconf.ssl_ca }}"
 {% endfor %}
+
+{% for resourceconf in icinga2_web_icingadb %}
+[{{ resourceconf.name }}]
+type = "db"
+db = "{{ resourceconf.db }}"
+host = "{{ resourceconf.host }}"
+port = "{{ resourceconf.port }}"
+dbname = "{{ resourceconf.dbname }}"
+username = "{{ resourceconf.username }}"
+password = "{{ resourceconf.password }}"
+charset = "{{ resourceconf.charset }}"
+use_ssl = "{{ resourceconf.use_ssl }}"
+ssl_ca = "{{ resourceconf.ssl_ca }}"
+{% endfor %}

@@ -1,0 +1,7 @@
+[icingadb]
+{% for resourceconf in icinga2_web_icingadb %}
+resource = "{{ resourceconf.name }}"
+{% endfor %}  
+
+[redis]
+tls = "0"

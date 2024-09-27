@@ -12,5 +12,8 @@ icinga2_web_packages:
   - mysql
   - git
 
+icinga2_web_icingadb_packages:
+  - icingadb-web
+
 # path to ca store
-icinga2_web_ca_path: "/etc/ssl/certs/ca-bundle.crt"
+icinga2_web_ca_path: /etc/ssl/certs/ca-bundle.crt
