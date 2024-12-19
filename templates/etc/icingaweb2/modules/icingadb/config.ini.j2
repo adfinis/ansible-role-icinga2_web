@@ -4,7 +4,7 @@ resource = "{{ resourceconf.name }}"
 {% endfor %}
 
 [settings]
-{% for key, value in icinga2_icingadb_settings.items() %}
+{% for key, value in icinga2_web_icingadb_settings.items() %}
 {{ key }} = {{ value | to_json }}
 {% endfor %}
 
