@@ -1,7 +1,12 @@
 [icingadb]
 {% for resourceconf in icinga2_web_icingadb %}
 resource = "{{ resourceconf.name }}"
-{% endfor %}  
+{% endfor %}
+
+[settings]
+{% for key, value in icinga2_icingadb_settings.items() %}
+{{ key }} = {{ value | to_json }}
+{% endfor %}
 
 [redis]
 tls = "0"

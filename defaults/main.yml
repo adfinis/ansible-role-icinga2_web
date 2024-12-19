@@ -243,6 +243,12 @@ icinga2_web_reporting: []
 
 icinga2_web_icingadb: []
 
+# IcingaDB settings
+
+# icinga2_web_icingadb_settings:
+#    hostdowntime_all_services: true
+icinga2_web_icingadb_settings: {}
+
 # Grafana configuration
 # icinga2_web_grafana:
 #   enabled: false
