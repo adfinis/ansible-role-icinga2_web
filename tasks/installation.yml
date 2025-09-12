@@ -132,7 +132,7 @@
     - icinga2_web_grafana.enabled
     - ansible_distribution == 'RedHat'
 
-- name: Add grafana apt key
+- name: Add grafana apt key for Debian < 12
   ansible.builtin.apt_key:
     id: 963FA27710458545
     url: https://apt.grafana.com/gpg.key
@@ -140,14 +140,30 @@
   when:
     - icinga2_web_grafana.enabled
     - ansible_distribution == 'Debian'
+    - ansible_distribution_major_version | int < 12
 
-- name: Add grafana repository
+- name: Add grafana repository for Debian < 12
   ansible.builtin.apt_repository:
     repo: deb https://apt.grafana.com stable main
     state: present
   when:
     - icinga2_web_grafana.enabled
     - ansible_distribution == 'Debian'
+    - ansible_distribution_major_version | int < 12
+
+- name: Configure icinga apt repository for Debian >= 12
+  ansible.builtin.deb822_repository:
+    name: grafana
+    types: deb
+    uris: https://apt.grafana.com
+    suites: stable
+    components: main
+    signed_by: https://apt.grafana.com/gpg.key
+    state: present
+  when:
+    - icinga2_web_grafana.enabled
+    - ansible_os_family == 'Debian'
+    - ansible_distribution_major_version | int >= 12
 
 - name: Install grafana
   ansible.builtin.apt:
