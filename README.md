@@ -22,12 +22,12 @@ This role has the following dependencies:
 ``` yaml
 roles:
 - name: 'adfinis.icinga2_agent'
+- name: 'robertdebock.fail2ban'
 
 collections:
   - ansible.posix
   - community.general
   - community.mysql
-  - robertdebock.roles
 ```
 
 For all dependencies to be correcty installed, you need to create a
