@@ -254,7 +254,7 @@
     ('admin', 1, '{{ icinga2_web_register_admin_hash.stdout }}')"
   when:
     - not ansible_check_mode
-    - icinga2_web_register_admin_hash
+    - not icinga2_web_register_admin_hash.skipped
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
 - name: Configure grafana
