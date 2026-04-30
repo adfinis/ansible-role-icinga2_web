@@ -2,7 +2,6 @@
 
 dependencies:
   - name: adfinis.icinga2_agent
-  - name: robertdebock.fail2ban
 
 galaxy_info:
   role_name: icinga2_web
