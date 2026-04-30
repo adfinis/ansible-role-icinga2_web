@@ -10,10 +10,6 @@
     state: present
   when: icinga2_web_use_icingadb
 
-- name: Install fail2ban using role
-  ansible.builtin.include_role:
-    name: robertdebock.fail2ban
-
 # Allow httpd to connect to the mysql database
 - name: Set httpd_can_network_connect_db flag on and keep it persistent across reboots
   ansible.posix.seboolean:
