@@ -249,6 +249,19 @@ icinga2_web_icingadb: []
 #    hostdowntime_all_services: true
 icinga2_web_icingadb_settings: {}
 
+# Navigation
+icinga2_web_navigation: {}
+#  Dashboard:
+#    type: "menu-item"
+#    parent: ""
+#    target: "_main"
+#    icon: "cloud"
+#    owner: "admin"
+#    groups: ["default"]
+#    users: ["user"]
+#    url: "/icingadb/tactical?filter"
+
+
 # Grafana configuration
 # icinga2_web_grafana:
 #   enabled: false

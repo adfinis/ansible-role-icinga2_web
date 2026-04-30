@@ -162,6 +162,26 @@ icinga2_web_ldap_userconf: []
 #    permissions:
 #      'monitoring/command/*,module/*'
 #    object_filter: 'host_name=*.customer.example.com"'
+
+
+```
+
+## Custom dashboard entries
+
+```yaml
+# Icinga2 Navigation configuration
+# Add custom menu entries, sadly this is not documented in the official docs.
+#
+#icinga2_web_navigation:
+#  Custom:
+#    type: "menu-item"
+#    parent: "Dashboard"
+#    target: "_main"
+#    icon: "cloud"
+#    owner: "admin"
+#    groups: ["default"]
+#    users: ["user1"]
+#    url: "/icingadb/tactical?filter"
 ```
 
 # Example Playbook

@@ -1,0 +1,9 @@
+{% for section, cfg in icinga2_web_navigation.items() %}
+[{{ section }}]
+{% for key, value in cfg.items() %}
+{% if value is not none and value != "" %}
+{{ key }} = "{% if value is iterable and value is not string %}{{ value | join(',') }}{% else %}{{ value }}{% endif %}"
+{% endif %}
+{% endfor %}
+
+{% endfor %}
