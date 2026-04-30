@@ -257,6 +257,26 @@
     - not icinga2_web_register_admin_hash.skipped
     - icinga2_web_register_icingaweb2_imported.rc == 1
 
+- name: Ensure navigation directory is present
+  ansible.builtin.file:
+    path: /etc/icingaweb2/navigation
+    state: directory
+    owner: root
+    group: icingaweb2
+    mode: "0770"
+
+- name: Configure global navigation
+  ansible.builtin.template:
+    src: templates/etc/icingaweb2/navigation/menu.ini.j2
+    dest: /etc/icingaweb2/navigation/menu.ini
+    owner: root
+    group: icingaweb2
+    mode: "0770"
+    seuser: system_u
+    serole: object_r
+    setype: icingaweb2_config_t
+    selevel: s0
+
 - name: Configure grafana
   ansible.builtin.template:
     src: templates/etc/grafana/grafana.ini.j2
