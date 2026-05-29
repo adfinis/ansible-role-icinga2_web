@@ -7,27 +7,26 @@ on:
   pull_request:
     branches: [master]
 
+permissions: {}
+
 jobs:
   # This workflow contains a single job called "build"
   lint:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
+        with:
+          persist-credentials: false
 
       # Checkout Adfinis lint-rules
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
         with:
           repository: adfinis-sygroup/ansible-lint-rules
           path: lint-rules
+          persist-credentials: false
 
       - name: ansible-lint
-        uses: ansible/ansible-lint@main
-        with:
-          targets: icinga2_web
-          args: "-R -r lint-rules"
-          override-deps: |
-            ansible~=2.10
-            ansible-lint~=5.0
+        uses: ansible/ansible-lint@5fac056c45595896c973fbde871f01f6cb14d74c # v26.4.0
+
       - name: yamllint
-        uses: karancode/yamllint-github-action@v2.0.0
+        uses: karancode/yamllint-github-action@dd59165b84d90d37fc919c3c7dd84c7e37cd6bfb # v2.0.0
