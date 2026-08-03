@@ -1,6 +1,10 @@
 ROLE ICINGA2_WEB
 ================
 
+> [!WARNING]
+> **DEPRECATED:** This role has been migrated to the [adfinis.icinga2 collection](https://github.com/adfinis/ansible-collection-icinga2)
+> and will no longer receive updates. Please use `adfinis.icinga2.icinga2_web` instead.
+
 [![image](https://img.shields.io/github/license/adfinis/ansible-role-icinga2_web.svg?style=flat-square)](https://github.com/adfinis/ansible-role-icinga2_web/blob/master/LICENSE)
 
 [![image](https://img.shields.io/github/actions/workflow/status/adfinis/ansible-role-icinga2_web/ansible-ci.yml?branch=master&style=flat-square)](https://github.com/adfinis/ansible-role-icinga2_web/actions/workflows/ansible-ci.yml)
